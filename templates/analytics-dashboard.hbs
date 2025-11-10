@@ -1,0 +1,274 @@
+<div id="ragnars-mark-analytics-dashboard" class="analytics-dashboard">
+  <div class="dashboard-header">
+  <h2>RagNarok's Mark - Analytics Dashboard</h2>
+    <p class="total-logs">Total Events Logged: <strong>{{totalLogs}}</strong></p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Condition Statistics -->
+    <div class="panel most-applied">
+      <h3>Most Applied Conditions (Top 10)</h3>
+      <div class="stats-list">
+        {{#if mostApplied}}
+          {{#each mostApplied}}
+            <div class="stat-row">
+              <span class="condition-name">{{this.name}}</span>
+              <span class="stat-value">{{this.applied}} times</span>
+            </div>
+          {{/each}}
+        {{else}}
+          <p class="empty-state">No condition data yet. Conditions tracked during gameplay.</p>
+        {{/if}}
+      </div>
+    </div>
+
+    <!-- Most Affected Tokens -->
+    <div class="panel most-affected">
+      <h3>Most Affected Tokens (Top 10)</h3>
+      <div class="stats-list">
+        {{#if mostAffected}}
+          {{#each mostAffected}}
+            <div class="stat-row">
+              <span class="token-name">{{this.name}}</span>
+              <span class="stat-value">{{this.count}} conditions</span>
+            </div>
+          {{/each}}
+        {{else}}
+          <p class="empty-state">No token data yet.</p>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity Log -->
+  <div class="panel recent-activity">
+    <h3>Recent Activity (Last 20 Events)</h3>
+    <div class="activity-log">
+      {{#if recentLogs}}
+        {{#each recentLogs}}
+          <div class="log-entry {{this.action}}">
+            <span class="timestamp">{{format-date this.timestamp 'HH:mm:ss'}}</span>
+            <span class="token-name">{{this.tokenName}}</span>
+            <span class="action-text">
+              {{#if (eq this.action 'applied')}}
+                <span class="action-badge applied">+</span> {{this.condition}}
+              {{else if (eq this.action 'removed')}}
+                <span class="action-badge removed">-</span> {{this.condition}}
+              {{else}}
+                <span class="action-badge updated">~</span> {{this.condition}}
+              {{/if}}
+            </span>
+          </div>
+        {{/each}}
+      {{else}}
+        <p class="empty-state">No activity logged yet.</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Export/Import Controls -->
+  <div class="panel controls">
+    <h3>Data Management</h3>
+    <div class="button-group">
+      <button type="button" class="btn btn-primary export-logs">
+        <i class="fas fa-download"></i> Export Logs
+      </button>
+      <button type="button" class="btn btn-danger clear-analytics">
+        <i class="fas fa-trash"></i> Clear All Data
+      </button>
+    </div>
+    <p class="help-text">Export logs as JSON for external analysis. Clearing data cannot be undone.</p>
+  </div>
+</div>
+
+<style>
+  .analytics-dashboard {
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(20, 20, 30, 0.8) 0%, rgba(40, 40, 60, 0.8) 100%);
+    color: #fff;
+  }
+
+  .dashboard-header {
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(100, 150, 255, 0.5);
+    padding-bottom: 10px;
+  }
+
+  .dashboard-header h2 {
+    margin: 0 0 5px 0;
+    color: #64BFFF;
+  }
+
+  .total-logs {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .panel {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(100, 150, 255, 0.3);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .panel h3 {
+    margin-top: 0;
+    color: #64BFFF;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.2);
+    padding-bottom: 8px;
+  }
+
+  .stats-list {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 13px;
+  }
+
+  .stat-row:last-child {
+    border-bottom: none;
+  }
+
+  .condition-name,
+  .token-name {
+    font-weight: 500;
+  }
+
+  .stat-value {
+    color: #64BFFF;
+    font-weight: bold;
+  }
+
+  .empty-state {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .recent-activity {
+    grid-column: 1 / -1;
+  }
+
+  .activity-log {
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 12px;
+  }
+
+  .log-entry {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 8px;
+  }
+
+  .timestamp {
+    color: rgba(255, 255, 255, 0.5);
+    min-width: 70px;
+    font-family: monospace;
+  }
+
+  .token-name {
+    min-width: 120px;
+    color: #FFD700;
+  }
+
+  .action-badge {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  .action-badge.applied {
+    background: rgba(100, 200, 100, 0.6);
+    color: #00FF00;
+  }
+
+  .action-badge.removed {
+    background: rgba(200, 100, 100, 0.6);
+    color: #FF6B6B;
+  }
+
+  .action-badge.updated {
+    background: rgba(100, 150, 200, 0.6);
+    color: #64BFFF;
+  }
+
+  .controls {
+    grid-column: 1 / -1;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: #64BFFF;
+    color: #000;
+  }
+
+  .btn-primary:hover {
+    background: #80D4FF;
+    transform: scale(1.05);
+  }
+
+  .btn-danger {
+    background: #FF6B6B;
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background: #FF8585;
+    transform: scale(1.05);
+  }
+
+  .help-text {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 10px;
+  }
+
+  @media (max-width: 800px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .recent-activity {
+      grid-column: 1;
+    }
+  }
+</style>

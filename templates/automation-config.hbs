@@ -1,0 +1,102 @@
+<form id="ragnars-mark-automation-config" class="ragnars-form">
+  <fieldset>
+    <legend>Automation Controls</legend>
+    
+    <div class="form-group">
+      <label for="enableAutomation">Enable Automation System</label>
+      <input type="checkbox" id="enableAutomation" name="enableAutomation" {{#if enableAutomation}}checked{{/if}}>
+      <p class="hint">Enable automated condition chains and auto-apply rules</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <h3>Condition Chains</h3>
+    <p class="section-hint">When source condition is active, target condition automatically displays</p>
+    
+    {{#if chains}}
+      <div class="chains-list">
+        {{#each chains}}
+          <div class="chain-item">
+            <strong>{{this.source}}</strong> → <em>{{this.targets}}</em>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="empty-state">No condition chains configured. Use the API to add chains.</p>
+    {{/if}}
+
+    <div class="section-divider"></div>
+
+    <h3>Auto-Apply Rules</h3>
+    <p class="section-hint">Conditions automatically applied based on triggers (turn number, combat state, etc.)</p>
+    
+    {{#if rules}}
+      <div class="rules-list">
+        {{#each rules}}
+          <div class="rule-item">• {{this}}</div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="empty-state">No auto-apply rules configured. Use the API to add rules.</p>
+    {{/if}}
+
+    <div class="section-divider"></div>
+
+    <h3>Developer API</h3>
+    <p class="code-hint">Use <code>window.RagnarsMarkAPI</code> to manage conditions programmatically:</p>
+    <pre><code>// Add condition to token
+RagnarsMarkAPI.addCondition(tokenId, 'vulnerable', 300);
+
+// Remove condition
+RagnarsMarkAPI.removeCondition(tokenId, 'vulnerable');
+
+// Batch apply to multiple tokens
+RagnarsMarkAPI.batchApply([token1, token2], ['vulnerable', 'weakened']);</code></pre>
+  </fieldset>
+
+  <div class="form-buttons">
+    <button type="submit" class="btn btn-primary">Close</button>
+  </div>
+</form>
+
+<style>
+  #ragnars-mark-automation-config .section-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
+  }
+
+  #ragnars-mark-automation-config .chains-list,
+  #ragnars-mark-automation-config .rules-list {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+
+  #ragnars-mark-automation-config .chain-item,
+  #ragnars-mark-automation-config .rule-item {
+    padding: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  #ragnars-mark-automation-config .empty-state {
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+  }
+
+  #ragnars-mark-automation-config code {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-family: monospace;
+  }
+
+  #ragnars-mark-automation-config pre {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 12px;
+    margin: 10px 0;
+  }
+</style>

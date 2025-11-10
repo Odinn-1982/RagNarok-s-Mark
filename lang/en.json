@@ -1,0 +1,211 @@
+{
+  "RAGNARS_MARK": {
+    "Settings": {
+      "EnabledConditions": {
+        "Name": "Enabled Conditions",
+        "Hint": "Configure which conditions display as large overlays on tokens."
+      },
+      "OverlaySize": {
+        "Name": "Overlay Size",
+        "Hint": "Size multiplier for status overlay icons (1.0 = token size)"
+      },
+      "OverlayOpacity": {
+        "Name": "Overlay Opacity",
+        "Hint": "Opacity of status overlay icons (0.1 = very transparent, 1.0 = fully opaque)"
+      },
+      "OverlayPosition": {
+        "Name": "Overlay Position",
+        "Hint": "Where to position single overlays on the token (center or corners)"
+      },
+      "StackingMode": {
+        "Name": "Multi-Condition Stacking",
+        "Hint": "How multiple condition overlays arrange on tokens (overlapping, stacked grid, or circular)"
+      },
+      "GlobalAnimation": {
+        "Name": "Global Animation Type",
+        "Hint": "Animation effect for all overlays (can be overridden per-condition)"
+      },
+      "ConditionSettings": {
+        "Name": "Per-Condition Settings",
+        "Hint": "Individual color, glow, and animation settings for each condition"
+      },
+      "MatchingMode": {
+        "Name": "Condition Matching Mode",
+        "Hint": "How to match effect names: partial matching is more forgiving, exact matching is stricter"
+      },
+      "ShowDuration": {
+        "Name": "Show Effect Duration",
+        "Hint": "Display remaining duration/rounds on overlay icons"
+      },
+      "AnimationSpeed": {
+        "Name": "Animation Speed",
+        "Hint": "How fast animations play (Very Slow to Very Fast)"
+      },
+      "EnableBorders": {
+        "Name": "Enable Token Borders",
+        "Hint": "Add colored borders to tokens with active conditions"
+      },
+      "EnableBadges": {
+        "Name": "Enable Condition Badges",
+        "Hint": "Show numbered badges displaying condition count on tokens"
+      },
+      "EnableTooltips": {
+        "Name": "Enable Tooltips",
+        "Hint": "Show condition names when hovering over overlays"
+      },
+      "EnableShake": {
+        "Name": "Enable Shake Effect",
+        "Hint": "Tokens with certain conditions will shake/vibrate"
+      },
+      "MaxOverlays": {
+        "Name": "Maximum Overlays Per Token",
+        "Hint": "Maximum number of overlay icons to show on a single token (1-10)"
+      },
+      "UsePriority": {
+        "Name": "Use Priority System",
+        "Hint": "When max overlays is reached, show highest priority conditions only"
+      },
+      "EnableSounds": {
+        "Name": "Enable Sound Effects",
+        "Hint": "Play sounds when conditions are applied or removed"
+      },
+      "DarkMode": {
+        "Name": "Dark Mode UI",
+        "Hint": "Use darker colors for the configuration menus"
+      },
+      "ConditionAliases": {
+        "Name": "Condition Aliases",
+        "Hint": "Map multiple effect names to the same condition"
+      },
+      "IconOverrides": {
+        "Name": "Icon Overrides",
+        "Hint": "Use custom icons instead of default effect icons"
+      },
+      "SceneSettings": {
+        "Name": "Scene-Specific Settings",
+        "Hint": "Different overlay configurations for different scenes"
+      },
+      "ConditionGroups": {
+        "Name": "Condition Groups",
+        "Hint": "Organize conditions into custom categories"
+      },
+      "DebugMode": {
+        "Name": "Debug Mode",
+        "Hint": "Show performance metrics and matching information in console"
+      },
+      "ConfigMenu": {
+        "Name": "Condition Configuration",
+        "Label": "Configure Conditions",
+        "Hint": "Choose which status effects display as large overlays and customize their appearance."
+      },
+      "PresetsMenu": {
+        "Name": "System Presets",
+        "Label": "Apply System Preset",
+        "Hint": "Load pre-configured condition sets for different game systems (D&D 5e, Pathfinder 2e, etc)"
+      },
+      "AliasesMenu": {
+        "Name": "Condition Aliases",
+        "Label": "Configure Aliases",
+        "Hint": "Map alternative effect names to conditions for better matching"
+      },
+      "TrackDuration": {
+        "Name": "Track Effect Duration",
+        "Hint": "Monitor and respond to remaining duration on active effects"
+      },
+      "DurationColorCoding": {
+        "Name": "Duration Color Coding",
+        "Hint": "Overlay color changes based on remaining time (red for expiring soon)"
+      },
+      "EffectSourceFilter": {
+        "Name": "Effect Source Filter",
+        "Hint": "Which effects to track: Actor, Token, or Both"
+      },
+      "EnableParticles": {
+        "Name": "Enable Particle Effects",
+        "Hint": "Show particle effects (sparkles, flames, etc) based on condition type"
+      },
+      "VisualTheme": {
+        "Name": "Visual Theme",
+        "Hint": "Choose a preset visual theme for overlays (Dark Fantasy, Cyberpunk, Minimalist, etc)"
+      },
+      "EnableAutomation": {
+        "Name": "Enable Automation",
+        "Hint": "Enable condition chains and auto-apply rules"
+      },
+      "EnableAnalytics": {
+        "Name": "Enable Analytics",
+        "Hint": "Track condition statistics and generate combat reports"
+      },
+      "PlayerVisibility": {
+        "Name": "Player Condition Visibility",
+        "Hint": "Which conditions are visible to players: All, Public Only, or GM Only"
+      },
+      "GMOnlyConditions": {
+        "Name": "GM-Only Conditions",
+        "Hint": "Conditions visible only to GMs, hidden from players"
+      },
+      "ExcludeList": {
+        "Name": "Exclude List",
+        "Hint": "Tokens and actors to exclude from overlay display"
+      },
+      "CompoundConditions": {
+        "Name": "Compound Conditions",
+        "Hint": "Detect combinations of conditions (e.g., vulnerable + poisoned)"
+      },
+      "Accessibility": {
+        "Name": "Accessibility Mode",
+        "Hint": "Choose accessibility mode: Normal, High Contrast, Colorblind Friendly, or Text Labels"
+      },
+      "FilterButtons": {
+        "Name": "Enable Filter Buttons",
+        "Hint": "Show quick-filter buttons (Debuffs, Buffs, All) in UI"
+      },
+      "AnimationSequences": {
+        "Name": "Animation Sequences",
+        "Hint": "Chained animations (pulse → glow → bounce) for dramatic effects"
+      },
+      "AutomationMenu": {
+        "Name": "Automation Configuration",
+        "Label": "Configure Automation",
+        "Hint": "Set up condition chains, auto-apply rules, and batch operations"
+      },
+      "AnalyticsDashboard": {
+        "Name": "Analytics Dashboard",
+        "Label": "View Analytics",
+        "Hint": "See statistics on condition usage, affected tokens, and combat reports"
+      },
+      "EnableAISuggestions": {
+        "Name": "Enable AI Suggestions",
+        "Hint": "Allow the AI system to suggest conditions based on learning patterns"
+      },
+      "EnableSharing": {
+        "Name": "Enable Community Sharing",
+        "Hint": "Allow sharing and downloading condition presets from the community library"
+      },
+      "EnableSpellAutoApply": {
+        "Name": "Enable Spell Auto-Apply",
+        "Hint": "Automatically apply conditions when spells/abilities are used"
+      },
+      "MobileOptimization": {
+        "Name": "Enable Mobile Optimization",
+        "Hint": "Optimize UI and performance for tablet/mobile devices"
+      },
+      "PerformanceLevel": {
+        "Name": "Performance Level",
+        "Hint": "Choose between visual quality (High) or performance (Low)"
+      },
+      "EnableQuickAdd": {
+        "Name": "Enable Quick Add Panel",
+        "Hint": "Show floating panel for quickly adding favorite conditions"
+      },
+      "EnableUndoRedo": {
+        "Name": "Enable Undo/Redo",
+        "Hint": "Allow undoing and redoing condition changes (Ctrl+Z / Ctrl+Y)"
+      },
+      "EnablePlugins": {
+        "Name": "Enable Plugin System",
+        "Hint": "Allow third-party modules to extend Ragnar's Mark functionality"
+      }
+    }
+  }
+}

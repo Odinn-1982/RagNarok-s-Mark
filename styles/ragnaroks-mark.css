@@ -1,0 +1,99 @@
+/* RagNarok's Mark - Status Effect Overlays */
+
+/* Main overlay container - ensure proper rendering */
+.ragnaroks-mark-overlay {
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: multiply;
+}
+
+/* Overlay sprites - enhanced visual effects */
+.ragnaroks-mark-overlay img,
+.ragnaroks-mark-overlay canvas {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+/* Smooth transitions */
+.ragnaroks-mark-overlay {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Animation keyframes */
+@keyframes ragnar-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes ragnar-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes ragnar-fade {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; }
+}
+
+/* Apply animations to tokens with status overlays */
+.token.has-ragnaroks-overlay {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+}
+
+/* Floating launcher removed (avoids overlapping dice-tray UI). Open the Mark
+   hub via the sidebar button or programmatically:
+   `game.ragnaroks?.markHubApp?.render(true)` */
+
+/* Simple hub panel */
+.ragnaroks-mark-hub-window {
+  width: 380px;
+  background: linear-gradient(180deg,#070707,#0d0d0d);
+  color: #eee;
+  border: 2px solid #cc0f1a;
+  border-radius: 12px;
+  padding: 12px 14px;
+  z-index: 1200;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+}
+
+.ragnaroks-mark-hub-window .hub-header {
+  display:flex; align-items:center; justify-content:center; position:relative; margin-bottom:8px;
+}
+.ragnaroks-mark-hub-window .hub-logo img { display:block; margin:0 auto; width:84px; height:84px; object-fit:contain; }
+.ragnaroks-mark-hub-window .hub-controls { position:absolute; right:8px; top:6px; display:flex; gap:8px; }
+.ragnaroks-mark-hub-window .hub-controls a { color:#ccc; font-size:12px; text-decoration:none; padding:4px 6px; border-radius:6px }
+.ragnaroks-mark-hub-window .hub-controls a:hover { color:#fff; background:rgba(255,255,255,0.03) }
+
+.ragnaroks-mark-hub-window .hub-title { text-align:center; font-weight:700; color:#ffdddd; margin:6px 0 10px 0; letter-spacing:0.6px }
+
+.hub-grid-large { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.hub-large-btn { padding: 18px 12px; border-radius: 14px; font-size:15px; font-weight:700; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); color:#fff; cursor:pointer; box-shadow: 0 10px 30px rgba(204,15,26,0.06); }
+.hub-large-btn:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(204,15,26,0.18); }
+
+.centered-footer { text-align:center; margin-top:10px; color:#bbb }
+
+/* Ensure the popout app container is on top and clickable even if other overlays exist */
+.ragnaroks-mark-hub-app {
+  z-index: 3000 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure the inner window accepts pointer events explicitly */
+.ragnaroks-mark-hub-window {
+  pointer-events: auto !important;
+}
+
+/* Sidebar button to sit next to Deck (when present) */
+#ragnaroks-mark-sidebar-button, #ragnaroks-mark-sidebar-button * {
+  box-sizing: border-box;
+}
+#ragnaroks-mark-sidebar-button {
+  display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important;
+  padding:12px 8px !important; cursor:pointer !important; background: rgba(0,0,0,0.8) !important; border:1px solid #e10606 !important;
+  margin:0 !important; border-radius:4px !important; transition: all 0.2s ease !important; color:#e10606 !important;
+  min-height:48px !important; width:48px !important; user-select:none !important; pointer-events:auto !important; z-index:100 !important;
+}
+#ragnaroks-mark-sidebar-button:hover { background: rgba(225,6,6,0.2); border-color:#ff2222; color:#ff2222; transform: scale(1.05); }
+/* Active state matching sidebar buttons */
+#ragnaroks-mark-sidebar-button.active { background: rgba(255,34,34,0.18); border-color: #ff4444; color: #ff4444; transform: scale(1.03); }

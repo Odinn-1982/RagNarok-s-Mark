@@ -1,0 +1,90 @@
+<form>
+  <div class="form-group">
+    <label>Select a system preset to apply:</label>
+    <p class="notes">System presets include conditions and their settings optimized for specific game systems.</p>
+  </div>
+
+  <div class="presets-list">
+    {{#each presets}}
+    <div class="preset-option">
+      <label class="radio">
+        <input type="radio" name="selectedPreset" value="{{this.key}}" {{#if @first}}checked{{/if}} />
+        <span>{{this.name}}</span>
+      </label>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="form-group" style="margin-top: 1.5rem;">
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-download"></i> Apply Preset
+    </button>
+  </div>
+
+  <div class="form-group">
+    <p class="notes" style="color: #FF6B6B;">
+      <i class="fas fa-info-circle"></i> 
+      Applying a preset will overwrite your current condition settings. Your enabled/disabled state will be updated to match the preset.
+    </p>
+  </div>
+</form>
+
+<style>
+  #ragnars-mark-presets {
+    font-size: 13px;
+  }
+
+  #ragnars-mark-presets .presets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid var(--color-border-light-tertiary);
+    border-radius: 4px;
+    background: var(--color-bg-secondary);
+  }
+
+  #ragnars-mark-presets .preset-option {
+    padding: 0.5rem;
+  }
+
+  #ragnars-mark-presets .radio {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  #ragnars-mark-presets .radio:hover {
+    background: var(--color-bg-tertiary);
+  }
+
+  #ragnars-mark-presets .radio input[type="radio"] {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  #ragnars-mark-presets .btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--color-bg-button);
+    border: 1px solid var(--color-border-light);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+  }
+
+  #ragnars-mark-presets .btn:hover {
+    background: var(--color-bg-button-hover);
+  }
+
+  #ragnars-mark-presets .notes {
+    font-size: 11px;
+    color: var(--color-text-light-7);
+    margin: 0.5rem 0;
+  }
+</style>

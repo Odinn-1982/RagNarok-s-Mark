@@ -1,0 +1,80 @@
+<form>
+  <div class="form-group">
+    <label>Set alternative names for conditions:</label>
+    <p class="notes">Create aliases so conditions match different effect names. Separate multiple aliases with commas.</p>
+  </div>
+
+  <div class="aliases-grid">
+    {{#each conditions}}
+    <div class="alias-row">
+      <label class="alias-label">
+        <strong>{{this.name}}</strong>
+      </label>
+      <input type="text" name="aliases-{{this.key}}" value="{{this.aliases}}" placeholder="e.g., frightened, scared, terrified" class="alias-input" />
+      <p class="alias-help">Matches: {{this.key}}</p>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="form-group" style="margin-top: 1rem;">
+    <p class="notes">
+      <i class="fas fa-info-circle"></i> 
+      Aliases are case-insensitive and use partial matching by default.
+      Changes are saved immediately when you submit this form.
+    </p>
+  </div>
+</form>
+
+<style>
+  #ragnars-mark-aliases {
+    font-size: 12px;
+  }
+
+  #ragnars-mark-aliases .aliases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid var(--color-border-light-tertiary);
+    border-radius: 4px;
+    background: var(--color-bg-secondary);
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  #ragnars-mark-aliases .alias-row {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 4px;
+    background: var(--color-bg-primary);
+  }
+
+  #ragnars-mark-aliases .alias-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-light-0);
+  }
+
+  #ragnars-mark-aliases .alias-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 11px;
+    margin-bottom: 0.5rem;
+  }
+
+  #ragnars-mark-aliases .alias-help {
+    font-size: 10px;
+    color: var(--color-text-light-7);
+    margin: 0.25rem 0;
+  }
+
+  #ragnars-mark-aliases .notes {
+    font-size: 11px;
+    color: var(--color-text-light-7);
+    margin: 0.5rem 0;
+  }
+</style>

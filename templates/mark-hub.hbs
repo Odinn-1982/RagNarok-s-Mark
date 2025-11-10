@@ -1,0 +1,26 @@
+<div class="ragnaroks-mark-hub-window">
+  <div class="hub-header">
+    <div class="hub-logo">
+      <!-- Image fallback: if the image fails to load hide it and show text fallback -->
+  <img src="modules/{{#if @root.moduleId}}{{@root.moduleId}}{{else}}ragnaroks-mark{{/if}}/assets/mark-logo.png" alt="Mark" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+      <div class="hub-logo-text" style="display:none;">MARK</div>
+    </div>
+    <div class="hub-controls">
+      <a href="#" class="hub-control-popout" title="Pop Out">PopOut!</a>
+      <a href="#" class="hub-control-close" title="Close">Close</a>
+    </div>
+  </div>
+
+  <div class="hub-title">RagNarok's Mark</div>
+
+  <div class="hub-grid hub-grid-large">
+    <button class="hub-btn hub-large-btn" data-action="config">Condition Config</button>
+    <button class="hub-btn hub-large-btn" data-action="presets">Presets</button>
+    <button class="hub-btn hub-large-btn" data-action="automation">Automation</button>
+    <button class="hub-btn hub-large-btn" data-action="analytics">Analytics</button>
+  </div>
+
+  <div class="hub-footer centered-footer">
+    <small>v{{version}}</small>
+  </div>
+</div>

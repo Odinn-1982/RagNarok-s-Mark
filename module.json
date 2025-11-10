@@ -1,0 +1,47 @@
+{
+  "id": "ragnaroks-mark",
+  "title": "RagNarok's Mark",
+  "description": "Enterprise-grade status effect overlay system with 75+ features: AI suggestions, community sharing, spell automation, mobile optimization, advanced analytics, 8 visual systems, plugin architecture, performance optimization, and comprehensive developer APIs.",
+  "version": "4.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "Odinn1982"
+    }
+  ],
+  "esmodules": [
+    "scripts/ragnaroks-mark.js",
+    "scripts/features.js",
+    "scripts/automation.js",
+    "scripts/visual-effects.js",
+    "scripts/analytics.js",
+    "scripts/ai.js",
+    "scripts/customization.js",
+    "scripts/sharing.js",
+    "scripts/integration.js",
+    "scripts/advanced-analytics.js",
+    "scripts/performance.js",
+    "scripts/mobile-ui.js",
+    "scripts/qol.js",
+    "scripts/daggerheart-integration.js"
+  ],
+  "styles": [
+    "styles/ragnaroks-mark.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "relationships": {
+    "systems": []
+  }
+}
