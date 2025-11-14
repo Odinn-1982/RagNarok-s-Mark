@@ -106,10 +106,10 @@
 - `templates/aliases-config.hbs` - Aliases configuration UI
 
 ### Modified Files
-- `scripts/ragnars-mark.js` - All new features integrated (1300+ lines)
+- `scripts/ragnaroks-mark.js` - All new features integrated (1300+ lines)
 - `templates/condition-config.hbs` - Icon preview support
 - `lang/en.json` - Localization for all new settings
-- `styles/ragnars-mark.css` - Enhanced styling
+- `styles/ragnaroks-mark.css` - Enhanced styling
 - `README.md` - Comprehensive documentation
 - `module.json` - Updated to v2.0.0
 

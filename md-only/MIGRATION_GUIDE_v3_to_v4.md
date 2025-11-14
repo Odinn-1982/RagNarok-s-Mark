@@ -53,8 +53,8 @@
 
 ```javascript
 // In browser console or Foundry macro
-async function backupRagnarsMarkData() {
-  const data = game.settings.get('ragnars-mark', 'worldSettings') || {};
+async function backupRagnaroksMarkData() {
+  const data = game.settings.get('ragnaroks-mark', 'worldSettings') || {};
   const json = JSON.stringify(data, null, 2);
   
   const blob = new Blob([json], { type: 'application/json' });
@@ -67,7 +67,7 @@ async function backupRagnarsMarkData() {
   console.log('Backup complete!');
 }
 
-await backupRagnarsMarkData();
+await backupRagnaroksMarkData();
 ```
 
 ### Step 2: Update Module
@@ -80,7 +80,7 @@ await backupRagnarsMarkData();
 
 2. **Or manually:**
    - Download latest v4.0 from manifest
-   - Extract to `Data/modules/ragnars-mark/`
+  - Extract to `Data/modules/ragnaroks-mark/`
    - Enable module if not already enabled
    - Reload world
 
@@ -113,17 +113,12 @@ After updating, you should see a message in console:
 
 ### API Changes (All Backwards Compatible)
 
-**v3.0 Method:**
-```javascript
-RagnarsMark.addCondition(tokenId, condition);
-```
-
 **v4.0 Method (Preferred):**
 ```javascript
-RagnarsMarkAPI.addCondition(tokenId, condition);
+RagnaroksMarkAPI.addCondition(tokenId, condition);
 ```
 
-**Both work!** The old `RagnarsMark` object is aliased to `RagnarsMarkAPI` for compatibility.
+**Legacy Support:** Existing v3 macros continue to function through an automatically registered compatibility alias that forwards calls to `RagnaroksMarkAPI`.
 
 ### New Setting Names
 
@@ -131,7 +126,7 @@ Old settings are automatically mapped:
 
 | v3.0 Name | v4.0 Name | Migration |
 |-----------|-----------|-----------|
-| `ragnarsMarkEnabled` | `moduleEnabled` | ✅ Auto-mapped |
+| `ragnaroksMarkEnabled` | `moduleEnabled` | ✅ Auto-mapped |
 | `defaultDuration` | `defaultConditionDuration` | ✅ Auto-mapped |
 | `enableParticles` | `visualEffects.enableParticles` | ✅ Auto-mapped |
 | `customConditions` | `conditions.custom` | ✅ Auto-mapped |
@@ -144,7 +139,7 @@ Old settings are automatically mapped:
 
 ```javascript
 // New in v4.0 - AI suggests appropriate conditions
-const suggestions = await RagnarsMarkAPI.suggestConditions({
+const suggestions = await RagnaroksMarkAPI.suggestConditions({
   situationType: 'combat_round_start',
   tokenStats: { hp: 50, maxHp: 100 },
   lastCondition: 'weakened'
@@ -170,7 +165,7 @@ Create custom plugins:
 // Create a custom condition automation
 class MyPlugin {
   async initialize() {
-    RagnarsMarkAPI.registerPlugin({
+  RagnaroksMarkAPI.registerPlugin({
       id: 'my-plugin',
       name: 'My Plugin',
       version: '1.0.0'
@@ -188,10 +183,10 @@ Generate reports with 3 lines of code:
 
 ```javascript
 // Generate analytics
-const report = RagnarsMarkAPI.generateReport('summary');
+const report = RagnaroksMarkAPI.generateReport('summary');
 
 // Export to file
-await RagnarsMarkAPI.exportStats('csv', 'report.csv');
+await RagnaroksMarkAPI.exportStats('csv', 'report.csv');
 ```
 
 ### Feature 5: Custom Themes
@@ -199,7 +194,7 @@ await RagnarsMarkAPI.exportStats('csv', 'report.csv');
 Create visual themes:
 
 ```javascript
-await RagnarsMarkAPI.addCustomCondition({
+await RagnaroksMarkAPI.addCustomCondition({
   name: 'crystallized',
   color: '#00FFFF',
   effect: 'ice'
@@ -215,13 +210,13 @@ await RagnarsMarkAPI.addCustomCondition({
 **Solution 1: Manual Migration**
 ```javascript
 // Force migration
-await RagnarsMarkAPI.migratev3Data();
+await RagnaroksMarkAPI.migratev3Data();
 ```
 
 **Solution 2: Clear Cache**
 ```javascript
 // Clear and reload
-await RagnarsMarkAPI.clearCache();
+await RagnaroksMarkAPI.clearCache();
 window.location.reload();
 ```
 
@@ -229,13 +224,13 @@ window.location.reload();
 
 **Check 1: Module Enabled?**
 ```javascript
-const enabled = RagnarsMarkAPI.getGameSetting('moduleEnabled');
+const enabled = RagnaroksMarkAPI.getGameSetting('moduleEnabled');
 console.log('Module enabled:', enabled);
 ```
 
 **Check 2: Conditions Enabled?**
 ```javascript
-const list = RagnarsMarkAPI.getEnabledConditions();
+const list = RagnaroksMarkAPI.getEnabledConditions();
 console.log('Enabled conditions:', list);
 ```
 
@@ -248,17 +243,17 @@ console.log('Enabled conditions:', list);
 
 **Solution 1: Disable Particles**
 ```javascript
-await RagnarsMarkAPI.setGameSetting('visualEffects.enableParticles', false);
+await RagnaroksMarkAPI.setGameSetting('visualEffects.enableParticles', false);
 ```
 
 **Solution 2: Reduce Animation Quality**
 ```javascript
-await RagnarsMarkAPI.setGameSetting('visualEffects.particleQuality', 'low');
+await RagnaroksMarkAPI.setGameSetting('visualEffects.particleQuality', 'low');
 ```
 
 **Solution 3: Disable Analytics Tracking**
 ```javascript
-await RagnarsMarkAPI.setGameSetting('analytics.trackAll', false);
+await RagnaroksMarkAPI.setGameSetting('analytics.trackAll', false);
 ```
 
 ### Problem: Old Presets Not Working
@@ -267,7 +262,7 @@ await RagnarsMarkAPI.setGameSetting('analytics.trackAll', false);
 ```javascript
 // Old format presets can be converted
 const oldPreset = { /* v3.0 preset */ };
-const newPreset = await RagnarsMarkAPI.convertPreset(oldPreset);
+const newPreset = await RagnaroksMarkAPI.convertPreset(oldPreset);
 ```
 
 **Solution 2: Manual Conversion**
@@ -307,7 +302,7 @@ If you need to rollback:
 
 ```javascript
 // Before rollback, export current state
-const currentState = await RagnarsMarkAPI.exportCurrentState();
+const currentState = await RagnaroksMarkAPI.exportCurrentState();
 console.log('Exported state:', currentState);
 
 // Save the export JSON somewhere safe
@@ -328,18 +323,18 @@ console.log('Exported state:', currentState);
 
 ```javascript
 // Old API (still functional)
-RagnarsMarkAPI.addCondition('tokenId', 'stunned');
-RagnarsMarkAPI.removeCondition('tokenId', 'stunned');
-RagnarsMarkAPI.hasCondition('tokenId', 'stunned');
+RagnaroksMarkAPI.addCondition('tokenId', 'stunned');
+RagnaroksMarkAPI.removeCondition('tokenId', 'stunned');
+RagnaroksMarkAPI.hasCondition('tokenId', 'stunned');
 ```
 
 ### v4.0 Commands (New & Improved)
 
 ```javascript
 // New API (recommended)
-await RagnarsMarkAPI.addCondition('tokenId', 'stunned', { duration: 6000 });
-await RagnarsMarkAPI.batchApply(['token1', 'token2'], ['stunned'], 6000);
-const report = RagnarsMarkAPI.generateReport('summary');
+await RagnaroksMarkAPI.addCondition('tokenId', 'stunned', { duration: 6000 });
+await RagnaroksMarkAPI.batchApply(['token1', 'token2'], ['stunned'], 6000);
+const report = RagnaroksMarkAPI.generateReport('summary');
 ```
 
 ---
@@ -426,7 +421,7 @@ Before going live:
 
 ### Resources
 
-1. **Documentation:** [docs.ragnarsmark.com](https://docs.ragnarsmark.com)
+1. **Documentation:** [docs.ragnaroksmark.com](https://docs.ragnaroksmark.com)
 2. **API Reference:** See API_REFERENCE.md
 3. **Discord:** Join our community server
 4. **GitHub:** Report issues and discuss

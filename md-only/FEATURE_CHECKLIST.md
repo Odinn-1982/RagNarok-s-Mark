@@ -52,7 +52,7 @@
 - [x] B3. Overlay Audit Log - Complete timestamped history
 
 ### Performance & Developer (2 bonus features)
-- [x] B4. Module API (`window.RagnarsMarkAPI`) - 40+ public functions
+- [x] B4. Module API (`window.RagnaroksMarkAPI`) - 40+ public functions
 - [x] B5. Batch Update System - Efficient bulk operations
 
 ### Advanced Automation (2 bonus features)
@@ -80,9 +80,9 @@
 
 ### Module Structure
 ```
-ragnars-mark/
+ ragnaroks-mark/
 ├── scripts/
-│   ├── ragnars-mark.js          (Core: 1600+ lines)
+│   ├── ragnaroks-mark.js         (Core: 1600+ lines)
 │   ├── features.js              (Presets: 100+ lines)
 │   ├── automation.js            (Automation: 200+ lines) NEW
 │   ├── visual-effects.js        (Visual FX: 250+ lines) NEW
@@ -94,7 +94,7 @@ ragnars-mark/
 │   ├── automation-config.hbs    (Automation UI) NEW
 │   └── analytics-dashboard.hbs  (Analytics UI) NEW
 ├── styles/
-│   └── ragnars-mark.css         (Enhanced styling)
+│   └── styles/ragnaroks-mark.css (Enhanced styling)
 ├── lang/
 │   └── en.json                  (40+ localization keys)
 ├── module.json                  (v3.0.0 metadata)

@@ -227,7 +227,7 @@ It checks these HP paths (in order):
 
 Conditions are stored as Active Effects:
 - **Name:** "Defeated" or "Dead"
-- **Flag:** `ragnars-mark.conditionKey`
+- **Flag:** `ragnaroks-mark.conditionKey`
 - **Transfer:** false (stays on token)
 
 ---

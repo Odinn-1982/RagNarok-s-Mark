@@ -34,7 +34,7 @@ The Community Sharing Backend enables Ragnar's Mark users to:
 ┌─────────────────────────────────────────┐
 │  Foundry VTT Client (Module)            │
 │  ┌───────────────────────────────────┐  │
-│  │ RagnarsMarkAPI                    │  │
+│  │ RagnaroksMarkAPI                  │  │
 │  │ - Upload preset                   │  │
 │  │ - Download preset                 │  │
 │  │ - Rate/vote                       │  │
@@ -714,7 +714,7 @@ PORT=3000
 HOST=0.0.0.0
 
 # Database
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/ragnars-mark
+MONGODB_URI=mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/ragnaroks-mark
 REDIS_URI=redis://localhost:6379
 
 # JWT
@@ -772,7 +772,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/ragnars-mark
+  - MONGODB_URI=mongodb://mongo:27017/ragnaroks-mark
       - REDIS_URI=redis://redis:6379
     depends_on:
       - mongo
@@ -797,7 +797,7 @@ volumes:
 
 ```bash
 # Clone repository
-git clone https://github.com/ragnars-mark/community-backend.git
+git clone https://github.com/ragnaroks-mark/community-backend.git
 cd community-backend
 
 # Install dependencies
@@ -828,7 +828,7 @@ npm run build
 
 ```javascript
 async function uploadPreset(presetData, token) {
-  const response = await fetch('https://api.ragnarsmark.com/api/v4/presets', {
+  const response = await fetch('https://api.ragnaroksmark.com/api/v4/presets', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -850,7 +850,7 @@ async function uploadPreset(presetData, token) {
 
 async function downloadPreset(presetId, token) {
   const response = await fetch(
-    `https://api.ragnarsmark.com/api/v4/presets/${presetId}/download`,
+  `https://api.ragnaroksmark.com/api/v4/presets/${presetId}/download`,
     {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -866,24 +866,24 @@ async function downloadPreset(presetId, token) {
 
 ```javascript
 // Register community API
-RagnarsMarkAPI.registerCommunityBackend({
-  baseUrl: 'https://api.ragnarsmark.com',
+RagnaroksMarkAPI.registerCommunityBackend({
+  baseUrl: 'https://api.ragnaroksmark.com',
   apiVersion: 'v4',
   clientId: 'module-client-id'
 });
 
 // Upload current preset
-await RagnarsMarkAPI.uploadPreset({
+await RagnaroksMarkAPI.uploadPreset({
   name: 'My Preset',
   description: 'Great preset',
   isPublic: true
 });
 
 // Download community preset
-const preset = await RagnarsMarkAPI.downloadPreset('preset-id');
+const preset = await RagnaroksMarkAPI.downloadPreset('preset-id');
 
 // Rate preset
-await RagnarsMarkAPI.ratePreset('preset-id', 5);
+await RagnaroksMarkAPI.ratePreset('preset-id', 5);
 ```
 
 ---

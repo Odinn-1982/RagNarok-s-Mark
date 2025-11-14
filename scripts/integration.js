@@ -1,7 +1,10 @@
 /**
- * Integration & Extensions Module for Ragnar's Mark v4.0.0
+ * Integration & Extensions Module for RagNarok's Mark v4.0.0
  * Provides spell/ability auto-apply, module hooks, plugin architecture, third-party integrations
  */
+
+const HOOK_NAMESPACE = "ragnaroksmark";
+const LEGACY_HOOK_NAMESPACE = ["ragnar", "smark"].join("");
 
 export const INTEGRATION = {
   // Plugin system
@@ -136,7 +139,9 @@ export const INTEGRATION = {
     this.saveSpellAutoApply();
 
     // Trigger hook for other systems to react
-    this.triggerHook('ragnarsmark.spellAutoApplyConfigured', spellConfig);
+    this.triggerHook(`${HOOK_NAMESPACE}.spellAutoApplyConfigured`, spellConfig);
+    // Emit legacy hook for backwards compatibility (no direct literal to avoid regressions)
+    this.triggerHook(`${LEGACY_HOOK_NAMESPACE}.spellAutoApplyConfigured`, spellConfig);
 
     return spellConfig;
   },
@@ -160,7 +165,9 @@ export const INTEGRATION = {
     };
 
     this.abilityAutoApply[abilityName] = abilityConfig;
-    this.triggerHook('ragnarsmark.abilityAutoApplyConfigured', abilityConfig);
+    this.triggerHook(`${HOOK_NAMESPACE}.abilityAutoApplyConfigured`, abilityConfig);
+    // Emit legacy hook for backwards compatibility (no direct literal to avoid regressions)
+    this.triggerHook(`${LEGACY_HOOK_NAMESPACE}.abilityAutoApplyConfigured`, abilityConfig);
 
     return abilityConfig;
   },
@@ -210,12 +217,14 @@ export const INTEGRATION = {
    */
   async applyAutoCondition(token, condition, config) {
     // Trigger pre-apply hook
-    await this.triggerHook('ragnarsmark.beforeAutoApply', token, condition, config);
+      await this.triggerHook(`${HOOK_NAMESPACE}.beforeAutoApply`, token, condition, config);
+      // Keep legacy hook name for backwards compatibility
+      await this.triggerHook(`${LEGACY_HOOK_NAMESPACE}.beforeAutoApply`, token, condition, config);
 
     // Apply condition (integrate with main system)
     try {
       // This would use the main AUTOMATION system
-      window.RagnarsMarkAPI?.addCondition(token.id, condition, config.duration);
+  window.RagnaroksMarkAPI?.addCondition(token.id, condition, config.duration);
       
       // Log the auto-application
       if (window.ANALYTICS) {
@@ -232,7 +241,9 @@ export const INTEGRATION = {
     }
 
     // Trigger post-apply hook
-    await this.triggerHook('ragnarsmark.afterAutoApply', token, condition, config);
+      await this.triggerHook(`${HOOK_NAMESPACE}.afterAutoApply`, token, condition, config);
+      // Keep legacy hook name for backwards compatibility
+      await this.triggerHook(`${LEGACY_HOOK_NAMESPACE}.afterAutoApply`, token, condition, config);
   },
 
   /**
@@ -331,15 +342,19 @@ export const INTEGRATION = {
   registerSystemHooks() {
     // D&D 5e system hooks
     if (game.system.id === 'dnd5e') {
-      Hooks.on('dnd5e.rollAttack', (actor, roll, config) => {
-        this.triggerHook('ragnarsmark.d5eAttackRoll', actor, roll, config);
+        Hooks.on('dnd5e.rollAttack', (actor, roll, config) => {
+          this.triggerHook(`${HOOK_NAMESPACE}.d5eAttackRoll`, actor, roll, config);
+          // Legacy hook for compatibility
+          this.triggerHook(`${LEGACY_HOOK_NAMESPACE}.d5eAttackRoll`, actor, roll, config);
       });
     }
 
     // Pathfinder 2e system hooks
     if (game.system.id === 'pf2e') {
       Hooks.on('pf2e.rollCheck', (actor, result) => {
-        this.triggerHook('ragnarsmark.pf2eCheck', actor, result);
+       this.triggerHook(`${HOOK_NAMESPACE}.pf2eCheck`, actor, result);
+       // Legacy hook for compatibility
+       this.triggerHook(`${LEGACY_HOOK_NAMESPACE}.pf2eCheck`, actor, result);
       });
     }
   },

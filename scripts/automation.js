@@ -101,7 +101,7 @@ export const AUTOMATION = {
     if (this.batchProcessing || this.batchQueue.length === 0) return;
 
     this.batchProcessing = true;
-    const settings = game.settings.get('ragnars-mark', 'enabledConditions');
+  const settings = game.settings.get('ragnaroks-mark', 'enabledConditions');
 
     while (this.batchQueue.length > 0) {
       const operation = this.batchQueue.shift();

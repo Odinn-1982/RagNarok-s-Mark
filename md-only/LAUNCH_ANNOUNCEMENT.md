@@ -859,7 +859,7 @@ Everything you need to succeed:
 
 ### Step 1: Install Module
 ```
-Module ID: ragnoroks-mark-v4
+Module ID: ragnaroks-mark-v4
 Install from Foundry Module Installer
 Takes 2 minutes
 ```
@@ -972,9 +972,10 @@ Takes 2 minutes
 - **Discord:** Active community ready to help
 
 ### Join Community
-- **Discord Server:** https://discord.gg/ragnoroks
+
+- **Discord Server:** <https://discord.gg/ragnaroks>
 - **GitHub Discussions:** Ask questions publicly
-- **Reddit:** r/RagNoroksMarkModule
+- **Reddit:** <https://reddit.com/r/RagnaroksMarkModule>
 - **YouTube:** Full tutorial series
 - **Twitch:** Monthly live streams
 
@@ -1073,14 +1074,14 @@ Before you launch into v4.0, make sure you have:
 
 ### Option 2: Manual Installation
 ```
-Download: https://github.com/yourusername/ragnoroks-mark-v4
-Extract to: Foundry/modules/ragnoroks-mark-v4
+Download: https://github.com/yourusername/ragnaroks-mark-v4
+Extract to: Foundry/modules/ragnaroks-mark-v4
 Enable in world
 ```
 
 ### Option 3: Direct ZIP Download
 ```
-Download: https://releases.ragnoroks.dev/v4.0.0.zip
+Download: https://releases.ragnaroks.dev/v4.0.0.zip
 Extract to: Foundry/modules/
 Enable in world
 ```
@@ -1135,10 +1136,10 @@ Thank you to everyone who made this possible:
 
 **Download RagNarok's Mark v4.0 TODAY**
 
-**[INSTALL FROM FOUNDRY MARKETPLACE](https://foundryvtt.com/packages/ragnoroks-mark)**
+**[INSTALL FROM FOUNDRY MARKETPLACE](https://foundryvtt.com/packages/ragnaroks-mark)**
 
 ---
 
 *RagNarok's Mark v4.0 | November 8, 2025 | MIT Licensed | Free Forever*
 
-**Share your excitement:** #RagNoroksMarkV4 #FoundryVTT #TTRPGDeveloper
+**Share your excitement:** #RagnaroksMarkV4 #FoundryVTT #TTRPGDeveloper

@@ -309,7 +309,7 @@ export const AI = {
    */
   saveLearningData() {
     try {
-      game.settings.set('ragnars-mark', 'aiLearningData', JSON.stringify(this.learningData));
+  game.settings.set('ragnaroks-mark', 'aiLearningData', JSON.stringify(this.learningData));
     } catch (e) {
       console.error('Failed to save AI learning data:', e);
     }
@@ -320,7 +320,7 @@ export const AI = {
    */
   loadLearningData() {
     try {
-      const stored = game.settings.get('ragnars-mark', 'aiLearningData');
+  const stored = game.settings.get('ragnaroks-mark', 'aiLearningData');
       if (stored) {
         this.learningData = JSON.parse(stored);
       }

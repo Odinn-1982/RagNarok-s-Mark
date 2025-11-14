@@ -45,9 +45,9 @@
 
 ### API Functions (New)
 ```javascript
-RagnarsMarkAPI.getConditionSuggestions(tokenId, context)
-RagnarsMarkAPI.predictEffectChain(sourceCondition)
-RagnarsMarkAPI.getAIInsights()
+RagnaroksMarkAPI.getConditionSuggestions(tokenId, context)
+RagnaroksMarkAPI.predictEffectChain(sourceCondition)
+RagnaroksMarkAPI.getAIInsights()
 ```
 
 ### AI Module (ai.js - 200+ lines)
@@ -552,14 +552,14 @@ QUALITY_OF_LIFE.getHistory(condition)
 
 ## New Localization Keys (10)
 
-- RAGNARS_MARK.Settings.EnableAISuggestions
-- RAGNARS_MARK.Settings.EnableSharing
-- RAGNARS_MARK.Settings.EnableSpellAutoApply
-- RAGNARS_MARK.Settings.MobileOptimization
-- RAGNARS_MARK.Settings.PerformanceLevel
-- RAGNARS_MARK.Settings.EnableQuickAdd
-- RAGNARS_MARK.Settings.EnableUndoRedo
-- RAGNARS_MARK.Settings.EnablePlugins
+- RAGNAROKS_MARK.Settings.EnableAISuggestions
+- RAGNAROKS_MARK.Settings.EnableSharing
+- RAGNAROKS_MARK.Settings.EnableSpellAutoApply
+- RAGNAROKS_MARK.Settings.MobileOptimization
+- RAGNAROKS_MARK.Settings.PerformanceLevel
+- RAGNAROKS_MARK.Settings.EnableQuickAdd
+- RAGNAROKS_MARK.Settings.EnableUndoRedo
+- RAGNAROKS_MARK.Settings.EnablePlugins
 - Plus 50+ more localization strings
 
 ---

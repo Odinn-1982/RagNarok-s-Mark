@@ -44,7 +44,7 @@ A plugin is a Foundry VTT module that extends Ragnar's Mark functionality. Plugi
 2. Create `module.json` with proper manifest
 3. Create `scripts/plugin.js` with your plugin code
 4. Enable in Foundry world
-5. Use `RagnarsMarkAPI.registerPlugin()` to register
+5. Use `RagnaroksMarkAPI.registerPlugin()` to register
 
 ---
 
@@ -84,7 +84,7 @@ your-plugin-name/
   ],
   "dependencies": [
     {
-      "id": "ragnars-mark",
+      "id": "ragnaroks-mark",
       "type": "module",
       "manifest": "your-manifest-url"
     }
@@ -111,8 +111,8 @@ All plugins must register with Ragnar's Mark:
 
 ```javascript
 // In your plugin.js
-Hooks.once('ragnarsMarkPluginReady', () => {
-  RagnarsMarkAPI.registerPlugin({
+Hooks.once('ragnaroksMarkPluginReady', () => {
+  RagnaroksMarkAPI.registerPlugin({
     id: 'my-plugin',
     name: 'My Plugin',
     description: 'Does something cool',
@@ -137,13 +137,13 @@ Plugins can define settings that are automatically registered:
 
 ```javascript
 // Settings are registered automatically in registerPlugin()
-const settings = RagnarsMarkAPI.getPluginSettings('my-plugin');
+const settings = RagnaroksMarkAPI.getPluginSettings('my-plugin');
 
 // Update a setting
-RagnarsMarkAPI.updatePluginSetting('my-plugin', 'enableCustomEffects', false);
+RagnaroksMarkAPI.updatePluginSetting('my-plugin', 'enableCustomEffects', false);
 
 // Listen for setting changes
-Hooks.on('ragnarsMarkSettingChanged', (pluginId, settingKey, newValue) => {
+Hooks.on('ragnaroksMarkSettingChanged', (pluginId, settingKey, newValue) => {
   if (pluginId === 'my-plugin' && settingKey === 'enableCustomEffects') {
     // React to change
   }
@@ -156,17 +156,17 @@ Hook into Ragnar's Mark lifecycle events:
 
 ```javascript
 // When a condition is applied
-Hooks.on('ragnarsMarkConditionApplied', (tokenId, conditionName, duration) => {
+Hooks.on('ragnaroksMarkConditionApplied', (tokenId, conditionName, duration) => {
   console.log(`${conditionName} applied to token ${tokenId}`);
 });
 
 // When a condition is removed
-Hooks.on('ragnarsMarkConditionRemoved', (tokenId, conditionName) => {
+Hooks.on('ragnaroksMarkConditionRemoved', (tokenId, conditionName) => {
   console.log(`${conditionName} removed from token ${tokenId}`);
 });
 
 // When conditions change
-Hooks.on('ragnarsMarkConditionsChanged', (tokenId, conditions) => {
+Hooks.on('ragnaroksMarkConditionsChanged', (tokenId, conditions) => {
   console.log(`Token ${tokenId} now has conditions:`, conditions);
 });
 ```
@@ -177,7 +177,7 @@ Create custom condition relationships:
 
 ```javascript
 // Define a chain: vulnerable → marked
-RagnarsMarkAPI.addConditionChain('vulnerable', 'marked', {
+RagnaroksMarkAPI.addConditionChain('vulnerable', 'marked', {
   autoApply: true,        // Auto-apply when source active
   removeTogether: true,   // Remove together
   priority: 1,            // Chain priority
@@ -196,11 +196,11 @@ RagnarsMarkAPI.addConditionChain('vulnerable', 'marked', {
    ↓
 2. Ragnar's Mark Core Loads
    ↓
-3. "ragnarsMarkReady" Hook Fires
+3. "ragnaroksMarkReady" Hook Fires
    ↓
 4. Plugin registerPlugin() Called
    ↓
-5. "ragnarsMarkPluginRegistered" Hook Fires
+5. "ragnaroksMarkPluginRegistered" Hook Fires
    ↓
 6. Plugin Ready to Handle Events
 ```
@@ -209,9 +209,9 @@ RagnarsMarkAPI.addConditionChain('vulnerable', 'marked', {
 
 ```javascript
 // CORRECT: Wait for Ragnar's Mark to be ready
-Hooks.once('ragnarsMarkReady', () => {
-  // Safe to access RagnarsMarkAPI
-  const api = window.RagnarsMarkAPI;
+Hooks.once('ragnaroksMarkReady', () => {
+  // Safe to access RagnaroksMarkAPI
+  const api = window.RagnaroksMarkAPI;
   
   api.registerPlugin({
     id: 'my-plugin',
@@ -221,7 +221,7 @@ Hooks.once('ragnarsMarkReady', () => {
 });
 
 // WRONG: Trying to access API before ready
-const api = window.RagnarsMarkAPI; // May be undefined!
+const api = window.RagnaroksMarkAPI; // May be undefined!
 ```
 
 ---
@@ -232,50 +232,50 @@ const api = window.RagnarsMarkAPI; // May be undefined!
 
 ```javascript
 // Register a plugin
-RagnarsMarkAPI.registerPlugin(pluginConfig);
+  RagnaroksMarkAPI.registerPlugin(pluginConfig);
 
 // Get plugin info
-RagnarsMarkAPI.getPlugin(pluginId);
+RagnaroksMarkAPI.getPlugin(pluginId);
 
 // List all plugins
-RagnarsMarkAPI.getPlugins();
+RagnaroksMarkAPI.getPlugins();
 
 // Enable/disable plugin
-RagnarsMarkAPI.enablePlugin(pluginId);
-RagnarsMarkAPI.disablePlugin(pluginId);
+RagnaroksMarkAPI.enablePlugin(pluginId);
+RagnaroksMarkAPI.disablePlugin(pluginId);
 ```
 
 ### Condition Management
 
 ```javascript
 // Add condition to token
-RagnarsMarkAPI.addCondition(tokenId, 'vulnerable', 300);
+RagnaroksMarkAPI.addCondition(tokenId, 'vulnerable', 300);
 
 // Remove condition
-RagnarsMarkAPI.removeCondition(tokenId, 'vulnerable');
+RagnaroksMarkAPI.removeCondition(tokenId, 'vulnerable');
 
 // Toggle condition
-RagnarsMarkAPI.toggleCondition(tokenId, 'vulnerable');
+RagnaroksMarkAPI.toggleCondition(tokenId, 'vulnerable');
 
 // Get active conditions
-RagnarsMarkAPI.getConditions(tokenId);
+RagnaroksMarkAPI.getConditions(tokenId);
 
 // Check if token has condition
-RagnarsMarkAPI.hasCondition(tokenId, 'vulnerable');
+RagnaroksMarkAPI.hasCondition(tokenId, 'vulnerable');
 ```
 
 ### Batch Operations
 
 ```javascript
 // Apply multiple conditions to multiple tokens
-RagnarsMarkAPI.batchApply(
+RagnaroksMarkAPI.batchApply(
   [tokenId1, tokenId2, tokenId3],
   ['vulnerable', 'marked'],
   300  // duration in milliseconds
 );
 
 // Remove multiple conditions from multiple tokens
-RagnarsMarkAPI.batchRemove(
+RagnaroksMarkAPI.batchRemove(
   [tokenId1, tokenId2, tokenId3],
   ['vulnerable', 'marked']
 );
@@ -285,14 +285,14 @@ RagnarsMarkAPI.batchRemove(
 
 ```javascript
 // Get condition statistics
-const stats = RagnarsMarkAPI.getConditionStats('vulnerable');
+const stats = RagnaroksMarkAPI.getConditionStats('vulnerable');
 // Returns: { timesApplied, avgDuration, lastApplied, tokens }
 
 // Get all statistics
-const allStats = RagnarsMarkAPI.getAllStats();
+const allStats = RagnaroksMarkAPI.getAllStats();
 
 // Generate combat report
-const report = RagnarsMarkAPI.generateCombatReport();
+const report = RagnaroksMarkAPI.generateCombatReport();
 // Returns: { conditions, tokens, duration, topConditions }
 ```
 
@@ -300,30 +300,30 @@ const report = RagnarsMarkAPI.generateCombatReport();
 
 ```javascript
 // Create particle effect
-RagnarsMarkAPI.createParticleEffect(tokenId, 'fire');
+RagnaroksMarkAPI.createParticleEffect(tokenId, 'fire');
 // Supported: 'fire', 'poison', 'cold', 'lightning', 'sparkles', 'default'
 
 // Apply visual theme
-RagnarsMarkAPI.applyTheme('cyberpunk');
+RagnaroksMarkAPI.applyTheme('cyberpunk');
 
 // Get available themes
-RagnarsMarkAPI.getThemes();
+RagnaroksMarkAPI.getThemes();
 ```
 
 ### Settings & Data
 
 ```javascript
 // Get plugin settings
-const settings = RagnarsMarkAPI.getPluginSettings('my-plugin');
+const settings = RagnaroksMarkAPI.getPluginSettings('my-plugin');
 
 // Update plugin setting
-RagnarsMarkAPI.updatePluginSetting('my-plugin', 'settingKey', newValue);
+RagnaroksMarkAPI.updatePluginSetting('my-plugin', 'settingKey', newValue);
 
 // Store plugin data
-game.settings.set('ragnars-mark', 'pluginData_my-plugin', customData);
+game.settings.set('ragnaroks-mark', 'pluginData_my-plugin', customData);
 
 // Retrieve plugin data
-const data = game.settings.get('ragnars-mark', 'pluginData_my-plugin');
+const data = game.settings.get('ragnaroks-mark', 'pluginData_my-plugin');
 ```
 
 ---
@@ -334,27 +334,27 @@ const data = game.settings.get('ragnars-mark', 'pluginData_my-plugin');
 
 ```javascript
 // Lifecycle Hooks
-Hooks.on('ragnarsMarkReady', () => {});           // Core ready
-Hooks.on('ragnarsMarkPluginRegistered', (id) => {}); // Plugin registered
+Hooks.on('ragnaroksMarkReady', () => {});           // Core ready
+Hooks.on('ragnaroksMarkPluginRegistered', (id) => {}); // Plugin registered
 
 // Condition Hooks
-Hooks.on('ragnarsMarkConditionApplied', (tokenId, condition, duration) => {});
-Hooks.on('ragnarsMarkConditionRemoved', (tokenId, condition) => {});
-Hooks.on('ragnarsMarkConditionsChanged', (tokenId, conditions) => {});
+Hooks.on('ragnaroksMarkConditionApplied', (tokenId, condition, duration) => {});
+Hooks.on('ragnaroksMarkConditionRemoved', (tokenId, condition) => {});
+Hooks.on('ragnaroksMarkConditionsChanged', (tokenId, conditions) => {});
 
 // Batch Hooks
-Hooks.on('ragnarsMarkBatchApplied', (tokenIds, conditions) => {});
-Hooks.on('ragnarsMarkBatchRemoved', (tokenIds, conditions) => {});
+Hooks.on('ragnaroksMarkBatchApplied', (tokenIds, conditions) => {});
+Hooks.on('ragnaroksMarkBatchRemoved', (tokenIds, conditions) => {});
 
 // Chain Hooks
-Hooks.on('ragnarsMarkChainTriggered', (source, target) => {});
-Hooks.on('ragnarsMarkChainRemoved', (source, target) => {});
+Hooks.on('ragnaroksMarkChainTriggered', (source, target) => {});
+Hooks.on('ragnaroksMarkChainRemoved', (source, target) => {});
 
 // Setting Hooks
-Hooks.on('ragnarsMarkSettingChanged', (pluginId, key, value) => {});
+Hooks.on('ragnaroksMarkSettingChanged', (pluginId, key, value) => {});
 
 // Analytics Hooks
-Hooks.on('ragnarsMarkAnalyticsUpdated', (tokenId, stats) => {});
+Hooks.on('ragnaroksMarkAnalyticsUpdated', (tokenId, stats) => {});
 ```
 
 ### Creating Custom Hooks
@@ -380,7 +380,7 @@ Hooks.on('myPluginConditionProcessed', (tokenId, condition) => {
 ```javascript
 // Always wrap API calls in try-catch
 try {
-  RagnarsMarkAPI.addCondition(tokenId, 'custom-condition', 300);
+  RagnaroksMarkAPI.addCondition(tokenId, 'custom-condition', 300);
 } catch (error) {
   console.error('Failed to add condition:', error);
   ui.notifications.error('Failed to add condition');
@@ -401,7 +401,7 @@ function applyConditionSafely(tokenId, condition) {
   }
   
   // Safe to proceed
-  RagnarsMarkAPI.addCondition(tokenId, condition);
+  RagnaroksMarkAPI.addCondition(tokenId, condition);
 }
 ```
 
@@ -411,19 +411,19 @@ function applyConditionSafely(tokenId, condition) {
 // Don't call API repeatedly in loops
 // WRONG:
 for (let token of tokens) {
-  RagnarsMarkAPI.addCondition(token.id, 'vulnerable');  // Multiple calls
+  RagnaroksMarkAPI.addCondition(token.id, 'vulnerable');  // Multiple calls
 }
 
 // RIGHT:
 const tokenIds = tokens.map(t => t.id);
-RagnarsMarkAPI.batchApply(tokenIds, ['vulnerable']);    // Single call
+RagnaroksMarkAPI.batchApply(tokenIds, ['vulnerable']);    // Single call
 ```
 
 ### 4. Cleanup
 
 ```javascript
 // Remove event listeners when plugin disables
-Hooks.on('ragnarsMarkPluginDisabled', (pluginId) => {
+Hooks.on('ragnaroksMarkPluginDisabled', (pluginId) => {
   if (pluginId === 'my-plugin') {
     // Clean up resources
     this.removeEventListeners();
@@ -442,7 +442,7 @@ Hooks.on('ragnarsMarkPluginDisabled', (pluginId) => {
  * @returns {Promise<void>}
  */
 async function applyCombatConditions(tokenId, conditions, duration) {
-  return RagnarsMarkAPI.batchApply([tokenId], conditions, duration);
+  return RagnaroksMarkAPI.batchApply([tokenId], conditions, duration);
 }
 ```
 
@@ -450,7 +450,7 @@ async function applyCombatConditions(tokenId, conditions, duration) {
 
 ```javascript
 // Check API version compatibility
-const apiVersion = RagnarsMarkAPI.getVersion();
+const apiVersion = RagnaroksMarkAPI.getVersion();
 if (!apiVersion.startsWith('4.0')) {
   ui.notifications.error('This plugin requires Ragnar\'s Mark v4.0+');
   return;
@@ -466,8 +466,8 @@ if (!apiVersion.startsWith('4.0')) {
 ```javascript
 // Automatically apply conditions at the start of each round
 
-Hooks.once('ragnarsMarkReady', () => {
-  RagnarsMarkAPI.registerPlugin({
+Hooks.once('ragnaroksMarkReady', () => {
+  RagnaroksMarkAPI.registerPlugin({
     id: 'combat-round-tracker',
     name: 'Combat Round Tracker',
     description: 'Track conditions across combat rounds',
@@ -483,7 +483,7 @@ Hooks.on('updateCombat', (combat, changes, diff) => {
   // Apply concentration check penalties
   for (let token of canvas.tokens.placeables) {
     if (token.actor?.hasCondition?.('concentrating')) {
-      RagnarsMarkAPI.addCondition(token.id, 'concentration-check', 6000);
+  RagnaroksMarkAPI.addCondition(token.id, 'concentration-check', 6000);
     }
   }
 });
@@ -501,8 +501,8 @@ const SPELL_CONDITIONS = {
   'Slow': ['slowed']
 };
 
-Hooks.once('ragnarsMarkReady', () => {
-  RagnarsMarkAPI.registerPlugin({
+Hooks.once('ragnaroksMarkReady', () => {
+  RagnaroksMarkAPI.registerPlugin({
     id: 'spell-effects',
     name: 'Spell Effects Auto-Apply',
     description: 'Automatically apply conditions based on spell effects'
@@ -518,7 +518,7 @@ Hooks.on('createActiveEffect', (effect, options, userId) => {
   
   // Apply conditions to affected tokens
   for (let token of effect.parent.getActiveTokens?.() || []) {
-    RagnarsMarkAPI.batchApply([token.id], conditions, 30000);
+  RagnaroksMarkAPI.batchApply([token.id], conditions, 30000);
   }
 });
 ```
@@ -528,8 +528,8 @@ Hooks.on('createActiveEffect', (effect, options, userId) => {
 ```javascript
 // Generate weekly condition reports
 
-Hooks.once('ragnarsMarkReady', () => {
-  RagnarsMarkAPI.registerPlugin({
+Hooks.once('ragnaroksMarkReady', () => {
+  RagnaroksMarkAPI.registerPlugin({
     id: 'analytics-reporter',
     name: 'Analytics Reporter',
     description: 'Generate weekly condition usage reports',
@@ -564,7 +564,7 @@ function scheduleWeeklyReport() {
 }
 
 function generateWeeklyReport() {
-  const stats = RagnarsMarkAPI.getAllStats();
+  const stats = RagnaroksMarkAPI.getAllStats();
   const report = `
     Weekly Condition Report
     ${new Date().toLocaleDateString()}
@@ -585,8 +585,8 @@ function generateWeeklyReport() {
 ```javascript
 // Create custom visual themes
 
-Hooks.once('ragnarsMarkReady', () => {
-  RagnarsMarkAPI.registerPlugin({
+Hooks.once('ragnaroksMarkReady', () => {
+  RagnaroksMarkAPI.registerPlugin({
     id: 'custom-themes',
     name: 'Custom Themes',
     description: 'Add custom visual themes'
@@ -613,8 +613,8 @@ Hooks.once('ragnarsMarkReady', () => {
 ```javascript
 // Auto-apply conditions based on ability usage
 
-Hooks.once('ragnarsMarkReady', () => {
-  RagnarsMarkAPI.registerPlugin({
+Hooks.once('ragnaroksMarkReady', () => {
+  RagnaroksMarkAPI.registerPlugin({
     id: 'ability-triggers',
     name: 'Ability Trigger Conditions',
     description: 'Apply conditions when abilities are used'
@@ -640,7 +640,7 @@ Hooks.on('dnd5e.useAbility', async (item, config, options) => {
   
   // Apply to targets
   const tokenIds = Array.from(targets).map(t => t.id);
-  await RagnarsMarkAPI.batchApply(tokenIds, conditions, 6000);
+  await RagnaroksMarkAPI.batchApply(tokenIds, conditions, 6000);
 });
 ```
 
@@ -650,14 +650,14 @@ Hooks.on('dnd5e.useAbility', async (item, config, options) => {
 
 ### API Not Available
 
-**Problem**: `RagnarsMarkAPI is undefined`
+**Problem**: `RagnaroksMarkAPI is undefined`
 
 **Solution**: 
 ```javascript
 // Wait for the ready hook
-Hooks.once('ragnarsMarkReady', () => {
+Hooks.once('ragnaroksMarkReady', () => {
   // Safe to use now
-  RagnarsMarkAPI.registerPlugin({...});
+  RagnaroksMarkAPI.registerPlugin({...});
 });
 ```
 
@@ -667,7 +667,7 @@ Hooks.once('ragnarsMarkReady', () => {
 
 **Solution**:
 1. Check module.json has correct id format (lowercase, hyphens)
-2. Verify module depends on 'ragnars-mark'
+2. Verify module depends on 'ragnaroks-mark'
 3. Enable Ragnar's Mark first, then enable plugin
 4. Check browser console for errors
 
@@ -678,10 +678,10 @@ Hooks.once('ragnarsMarkReady', () => {
 **Solution**:
 ```javascript
 // Verify hook name exactly matches
-// Must be: 'ragnarsMarkConditionApplied' not 'conditionApplied'
+// Must be: 'ragnaroksMarkConditionApplied' not 'conditionApplied'
 
 // Test with log
-Hooks.on('ragnarsMarkConditionApplied', (tokenId, condition) => {
+Hooks.on('ragnaroksMarkConditionApplied', (tokenId, condition) => {
   console.log('Hook fired!', tokenId, condition);
 });
 ```
@@ -702,7 +702,7 @@ const debouncedHandler = _.debounce((tokenId, condition) => {
   // Do expensive work
 }, 500);
 
-Hooks.on('ragnarsMarkConditionApplied', debouncedHandler);
+Hooks.on('ragnaroksMarkConditionApplied', debouncedHandler);
 ```
 
 ---
@@ -754,7 +754,7 @@ git clone https://github.com/example/ragnar-plugin-template.git
 ### Q: Can my plugin add new conditions?
 **A**: Yes! Use the API to add conditions dynamically:
 ```javascript
-RagnarsMarkAPI.addCondition(tokenId, 'my-custom-condition', 300);
+RagnaroksMarkAPI.addCondition(tokenId, 'my-custom-condition', 300);
 ```
 
 ### Q: Can plugins conflict with each other?

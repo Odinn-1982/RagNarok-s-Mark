@@ -1,5 +1,5 @@
 {
-  "RAGNARS_MARK": {
+  "RAGNAROKS_MARK": {
     "Settings": {
       "EnabledConditions": {
         "Name": "Enabled Conditions",
@@ -204,7 +204,7 @@
       },
       "EnablePlugins": {
         "Name": "Enable Plugin System",
-        "Hint": "Allow third-party modules to extend Ragnar's Mark functionality"
+        "Hint": "Allow third-party modules to extend RagNarok's Mark functionality"
       }
     }
   }

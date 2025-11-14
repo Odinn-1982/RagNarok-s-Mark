@@ -4,9 +4,9 @@
 
 ### Files Structure
 - `module.json` - Module manifest and metadata
-- `scripts/ragnars-mark.js` - Main module logic
+`scripts/ragnaroks-mark.js` - Main module logic
 - `templates/condition-config.hbs` - Configuration UI template
-- `styles/ragnars-mark.css` - Styling for overlays
+`styles/ragnaroks-mark.css` - Styling for overlays
 - `lang/en.json` - Localization strings
 
 ### Core Components

@@ -52,11 +52,11 @@ Ragnar's Mark has been transformed from a solid v2.0 module into an enterprise-g
 
 | File | Changes | Impact |
 |------|---------|--------|
-| `scripts/ragnars-mark.js` | +200 lines | Added 15 new settings, 2 new forms, API exposure |
+| `scripts/ragnaroks-mark.js` | +200 lines | Added 15 new settings, 2 new forms, API exposure |
 | `module.json` | 3 lines updated | Version bump to 3.0.0, new esmodules |
 | `lang/en.json` | +40 keys | Comprehensive localization for all new features |
 | `README.md` | Complete rewrite | 500+ line professional documentation |
-| `styles/ragnars-mark.css` | Enhanced | New styling for dashboards and forms |
+| `styles/ragnaroks-mark.css` | Enhanced | New styling for dashboards and forms |
 
 ---
 
@@ -91,11 +91,11 @@ Ragnar's Mark has been transformed from a solid v2.0 module into an enterprise-g
 ### 🔌 Developer API
 ```javascript
 // 40+ public functions available
-RagnarsMarkAPI.addCondition(tokenId, 'vulnerable', 300);
-RagnarsMarkAPI.batchApply([token1, token2], ['weakened']);
-RagnarsMarkAPI.addConditionChain('vulnerable', 'targeted');
-RagnarsMarkAPI.generateCombatReport();
-RagnarsMarkAPI.applyTheme('cyberpunk');
+RagnaroksMarkAPI.addCondition(tokenId, 'vulnerable', 300);
+RagnaroksMarkAPI.batchApply([token1, token2], ['weakened']);
+RagnaroksMarkAPI.addConditionChain('vulnerable', 'targeted');
+RagnaroksMarkAPI.generateCombatReport();
+RagnaroksMarkAPI.applyTheme('cyberpunk');
 // ... and much more
 ```
 

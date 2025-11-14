@@ -1,0 +1,242 @@
+/* RagNarok's Mark - Overlay Configuration Styling */
+
+.ragnaroks-mark-overlay-config {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  background: #1a1a2e;
+  color: #ddd;
+}
+
+.ragnaroks-mark-overlay-config .config-header {
+  text-align: center;
+  border-bottom: 2px solid #e94560;
+  padding-bottom: 15px;
+}
+
+.ragnaroks-mark-overlay-config .config-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.ragnaroks-mark-overlay-config .config-header p {
+  margin: 0;
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+.ragnaroks-mark-overlay-config .config-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.ragnaroks-mark-overlay-config .config-controls button {
+  padding: 8px 16px;
+  background: #0f3460;
+  border: 1px solid #e94560;
+  color: #e94560;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-weight: bold;
+}
+
+.ragnaroks-mark-overlay-config .config-controls button:hover {
+  background: #e94560;
+  color: white;
+  box-shadow: 0 0 8px rgba(233, 69, 96, 0.5);
+}
+
+.ragnaroks-mark-overlay-config .condition-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.ragnaroks-mark-overlay-config .condition-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 15px;
+  padding: 12px;
+  background: #0f3460;
+  border-left: 4px solid #e94560;
+  border-radius: 4px;
+  align-items: center;
+}
+
+.ragnaroks-mark-overlay-config .condition-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ragnaroks-mark-overlay-config .condition-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #e94560;
+}
+
+.ragnaroks-mark-overlay-config .condition-checkbox label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.ragnaroks-mark-overlay-config .condition-controls {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ragnaroks-mark-overlay-config .control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ragnaroks-mark-overlay-config .control-group label {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #aaa;
+  font-weight: bold;
+}
+
+.ragnaroks-mark-overlay-config .control-group input[type="color"] {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #e94560;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ragnaroks-mark-overlay-config .control-group input[type="range"] {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #533483, #e94560);
+}
+
+.ragnaroks-mark-overlay-config .control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e94560;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(233, 69, 96, 0.6);
+}
+
+.ragnaroks-mark-overlay-config .control-group input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e94560;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(233, 69, 96, 0.6);
+  border: none;
+}
+
+.ragnaroks-mark-overlay-config .control-group select {
+  padding: 6px;
+  background: #1a1a2e;
+  border: 1px solid #e94560;
+  color: #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85em;
+}
+
+.ragnaroks-mark-overlay-config .control-group select option {
+  background: #0f3460;
+  color: #ddd;
+}
+
+.ragnaroks-mark-overlay-config .value-display {
+  font-size: 0.75em;
+  color: #e94560;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ragnaroks-mark-overlay-config .color-preview {
+  width: 100%;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid #666;
+  display: inline-block;
+}
+
+.ragnaroks-mark-overlay-config .config-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  border-top: 1px solid #533483;
+}
+
+.ragnaroks-mark-overlay-config .btn-primary {
+  padding: 10px 30px;
+  background: #e94560;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.ragnaroks-mark-overlay-config .btn-primary:hover {
+  background: #ff5a7a;
+  box-shadow: 0 0 12px rgba(233, 69, 96, 0.7);
+  transform: translateY(-2px);
+}
+
+/* Scrollbar Styling */
+.ragnaroks-mark-overlay-config .condition-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ragnaroks-mark-overlay-config .condition-list::-webkit-scrollbar-track {
+  background: #0f3460;
+  border-radius: 4px;
+}
+
+.ragnaroks-mark-overlay-config .condition-list::-webkit-scrollbar-thumb {
+  background: #e94560;
+  border-radius: 4px;
+}
+
+.ragnaroks-mark-overlay-config .condition-list::-webkit-scrollbar-thumb:hover {
+  background: #ff5a7a;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .ragnaroks-mark-overlay-config .condition-controls {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ragnaroks-mark-overlay-config .condition-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ragnaroks-mark-overlay-config .condition-controls {
+    grid-template-columns: 1fr;
+  }
+}

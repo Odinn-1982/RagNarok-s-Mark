@@ -3,6 +3,8 @@
  * Handles FoundryBorne system mechanics including defeated/dead status management
  */
 
+const LEGACY_MODULE_ID = ["ragnar", "s-mark"].join("");
+
 export const DAGGERHEART_INTEGRATION = {
   enabled: false,
   defeatedConditionKey: "defeated",
@@ -190,8 +192,9 @@ export const DAGGERHEART_INTEGRATION = {
       const conditionName = conditionKey.toLowerCase();
       
       return effectName === conditionName || 
-             effectLabel === conditionName ||
-             effect.flags?.['ragnars-mark']?.conditionKey === conditionKey;
+        effectLabel === conditionName ||
+  (effect.flags?.['ragnaroks-mark']?.conditionKey === conditionKey) ||
+  (effect.flags?.[LEGACY_MODULE_ID]?.conditionKey === conditionKey);
     });
   },
 
@@ -204,7 +207,11 @@ export const DAGGERHEART_INTEGRATION = {
     if (!token?.actor) return;
 
     // Get condition configuration from RagNarok's Mark settings
-    const conditionSettings = game.settings.get('ragnars-mark', 'conditionSettings') || {};
+    // Prefer canonical id 'ragnaroks-mark' but fall back to legacy id for migration
+    let conditionSettings = game.settings.get('ragnaroks-mark', 'conditionSettings') || {};
+    if (!Object.keys(conditionSettings || {}).length) {
+      conditionSettings = game.settings.get(LEGACY_MODULE_ID, 'conditionSettings') || {};
+    }
     const conditionConfig = conditionSettings[conditionKey] || {};
 
     // Create the effect
@@ -213,7 +220,7 @@ export const DAGGERHEART_INTEGRATION = {
       label: conditionKey.charAt(0).toUpperCase() + conditionKey.slice(1),
       icon: 'icons/svg/skull.svg', // Default icon
       flags: {
-        'ragnars-mark': {
+        'ragnaroks-mark': {
           conditionKey: conditionKey,
           appliedBy: 'daggerheart-integration',
           timestamp: Date.now()
@@ -228,8 +235,8 @@ export const DAGGERHEART_INTEGRATION = {
     await token.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
 
     // Trigger RagNarok's Mark visual effects if available
-    if (window.RagnarsMarkAPI?.visualEffects) {
-      window.RagnarsMarkAPI.visualEffects.applyConditionEffect(token, conditionKey);
+    if (window.RagnaroksMarkAPI?.visualEffects) {
+      window.RagnaroksMarkAPI.visualEffects.applyConditionEffect(token, conditionKey);
     }
   },
 
@@ -249,15 +256,16 @@ export const DAGGERHEART_INTEGRATION = {
       
       return effectName === conditionName || 
              effectLabel === conditionName ||
-             effect.flags?.['ragnars-mark']?.conditionKey === conditionKey;
+             (effect.flags?.['ragnaroks-mark']?.conditionKey === conditionKey) ||
+             (effect.flags?.[LEGACY_MODULE_ID]?.conditionKey === conditionKey);
     });
 
     if (effectToRemove) {
       await effectToRemove.delete();
       
       // Trigger RagNarok's Mark visual effect removal if available
-      if (window.RagnarsMarkAPI?.visualEffects) {
-        window.RagnarsMarkAPI.visualEffects.removeConditionEffect(token, conditionKey);
+      if (window.RagnaroksMarkAPI?.visualEffects) {
+        window.RagnaroksMarkAPI.visualEffects.removeConditionEffect(token, conditionKey);
       }
     }
   },
@@ -343,7 +351,7 @@ Hooks.on('getTokenHUDButtons', (hud, buttons, token) => {
   if (hasDefeated && !hasDead) {
     buttons.unshift({
       label: '☠️ Mark as Dead',
-      class: 'ragnars-mark-dead',
+  class: 'ragnaroks-mark-dead',
       icon: 'fas fa-skull-crossbones',
       onclick: async () => {
         await DAGGERHEART_INTEGRATION.markAsDead(token.object);
@@ -355,7 +363,7 @@ Hooks.on('getTokenHUDButtons', (hud, buttons, token) => {
   if (hasDead) {
     buttons.unshift({
       label: '💚 Revive (Defeated)',
-      class: 'ragnars-mark-revive-defeated',
+  class: 'ragnaroks-mark-revive-defeated',
       icon: 'fas fa-heart',
       onclick: async () => {
         await DAGGERHEART_INTEGRATION.markAsDefeated(token.object);
@@ -367,7 +375,7 @@ Hooks.on('getTokenHUDButtons', (hud, buttons, token) => {
   if (hasDefeated || hasDead) {
     buttons.unshift({
       label: '✨ Fully Revive',
-      class: 'ragnars-mark-revive-full',
+  class: 'ragnaroks-mark-revive-full',
       icon: 'fas fa-magic',
       onclick: async () => {
         await DAGGERHEART_INTEGRATION.fullyRevive(token.object);

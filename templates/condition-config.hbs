@@ -42,18 +42,18 @@
         <div class="setting-row">
           <label for="glow-{{this.key}}">Glow Intensity:</label>
           <input type="range" id="glow-{{this.key}}" name="condition-glow-{{this.key}}" 
-                 min="0.1" max="2.0" step="0.1" value="{{this.glowIntensity}}" />
-          <span class="value-display">{{this.glowIntensity}}</span>
+                 min="0.1" max="2.0" step="0.1" value="{{this.glow}}" />
+          <span class="value-display">{{this.glow}}</span>
         </div>
 
         <div class="setting-row">
           <label for="animation-{{this.key}}">Animation:</label>
           <select id="animation-{{this.key}}" name="condition-animation-{{this.key}}">
-            <option value="none" {{#if (eq this.animationType 'none')}}selected{{/if}}>None</option>
-            <option value="pulse" {{#if (eq this.animationType 'pulse')}}selected{{/if}}>Pulse</option>
-            <option value="glow" {{#if (eq this.animationType 'glow')}}selected{{/if}}>Glow</option>
-            <option value="bounce" {{#if (eq this.animationType 'bounce')}}selected{{/if}}>Bounce</option>
-            <option value="fade" {{#if (eq this.animationType 'fade')}}selected{{/if}}>Fade</option>
+            <option value="none" {{#if (eq this.animation 'none')}}selected{{/if}}>None</option>
+            <option value="pulse" {{#if (eq this.animation 'pulse')}}selected{{/if}}>Pulse</option>
+            <option value="glow" {{#if (eq this.animation 'glow')}}selected{{/if}}>Glow</option>
+            <option value="bounce" {{#if (eq this.animation 'bounce')}}selected{{/if}}>Bounce</option>
+            <option value="fade" {{#if (eq this.animation 'fade')}}selected{{/if}}>Fade</option>
           </select>
         </div>
       </div>
@@ -72,18 +72,18 @@
 </form>
 
 <style>
-  #ragnars-mark-config {
+  #ragnaroks-mark-config {
     font-size: 13px;
   }
 
-  #ragnars-mark-config .control-buttons {
+  #ragnaroks-mark-config .control-buttons {
     display: flex;
     gap: 0.5rem;
     margin: 1rem 0;
     flex-wrap: wrap;
   }
 
-  #ragnars-mark-config .btn {
+  #ragnaroks-mark-config .btn {
     padding: 0.5rem 1rem;
     background: var(--color-bg-button);
     border: 1px solid var(--color-border-light);
@@ -93,15 +93,15 @@
     transition: background 0.2s;
   }
 
-  #ragnars-mark-config .btn:hover {
+  #ragnaroks-mark-config .btn:hover {
     background: var(--color-bg-button-hover);
   }
 
-  #ragnars-mark-config .condition-search-wrapper {
+  #ragnaroks-mark-config .condition-search-wrapper {
     margin: 0.5rem 0 1rem 0;
   }
 
-  #ragnars-mark-config .condition-search {
+  #ragnaroks-mark-config .condition-search {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid var(--color-border-light);
@@ -109,7 +109,7 @@
     font-size: 13px;
   }
 
-  #ragnars-mark-config .conditions-grid {
+  #ragnaroks-mark-config .conditions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1rem;
@@ -122,14 +122,14 @@
     background: var(--color-bg-secondary);
   }
 
-  #ragnars-mark-config .condition-row {
+  #ragnaroks-mark-config .condition-row {
     padding: 0.75rem;
     border: 1px solid var(--color-border-light);
     border-radius: 4px;
     background: var(--color-bg-primary);
   }
 
-  #ragnars-mark-config .condition-header {
+  #ragnaroks-mark-config .condition-header {
     margin-bottom: 0.75rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--color-border-light);
@@ -138,7 +138,7 @@
     align-items: center;
   }
 
-  #ragnars-mark-config .condition-icon-preview {
+  #ragnaroks-mark-config .condition-icon-preview {
     width: 40px;
     height: 40px;
     border: 1px solid var(--color-border-light);
@@ -150,7 +150,7 @@
     justify-content: center;
   }
 
-  #ragnars-mark-config .condition-icon {
+  #ragnaroks-mark-config .condition-icon {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -158,11 +158,11 @@
     transition: transform 0.2s;
   }
 
-  #ragnars-mark-config .condition-icon:hover {
+  #ragnaroks-mark-config .condition-icon:hover {
     transform: scale(1.1);
   }
 
-  #ragnars-mark-config .ragnars-tooltip {
+  #ragnaroks-mark-config .ragnaroks-tooltip {
     position: absolute;
     bottom: 100%;
     left: 50%;
@@ -177,7 +177,7 @@
     margin-bottom: 5px;
   }
 
-  #ragnars-mark-config .checkbox {
+  #ragnaroks-mark-config .checkbox {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -185,31 +185,31 @@
     font-weight: 600;
   }
 
-  #ragnars-mark-config .checkbox input[type="checkbox"] {
+  #ragnaroks-mark-config .checkbox input[type="checkbox"] {
     margin: 0;
     cursor: pointer;
   }
 
-  #ragnars-mark-config .condition-settings {
+  #ragnaroks-mark-config .condition-settings {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     transition: opacity 0.2s;
   }
 
-  #ragnars-mark-config .setting-row {
+  #ragnaroks-mark-config .setting-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 12px;
   }
 
-  #ragnars-mark-config .setting-row label {
+  #ragnaroks-mark-config .setting-row label {
     min-width: 100px;
     flex-shrink: 0;
   }
 
-  #ragnars-mark-config .setting-row input[type="color"] {
+  #ragnaroks-mark-config .setting-row input[type="color"] {
     width: 50px;
     height: 28px;
     border: 1px solid var(--color-border-light);
@@ -217,17 +217,17 @@
     cursor: pointer;
   }
 
-  #ragnars-mark-config .setting-row input[type="range"] {
+  #ragnaroks-mark-config .setting-row input[type="range"] {
     flex: 1;
     min-width: 80px;
   }
 
-  #ragnars-mark-config .value-display {
+  #ragnaroks-mark-config .value-display {
     min-width: 35px;
     text-align: right;
   }
 
-  #ragnars-mark-config .setting-row select {
+  #ragnaroks-mark-config .setting-row select {
     flex: 1;
     padding: 0.25rem;
     border: 1px solid var(--color-border-light);
@@ -235,7 +235,7 @@
     font-size: 12px;
   }
 
-  #ragnars-mark-config .notes {
+  #ragnaroks-mark-config .notes {
     font-size: 11px;
     color: var(--color-text-light-7);
     margin: 0.5rem 0;

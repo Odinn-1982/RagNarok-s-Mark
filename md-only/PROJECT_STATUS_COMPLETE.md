@@ -24,7 +24,7 @@
 ### Core Module Files
 ```
 scripts/
-├── ragnars-mark.js              ✅ Main module (1900+ lines)
+├── ragnaroks-mark.js            ✅ Main module (1900+ lines)
 ├── features.js                  ✅ System presets
 ├── automation.js                ✅ Condition automation (200+ lines)
 ├── visual-effects.js            ✅ Visual system (250+ lines)
@@ -48,7 +48,7 @@ templates/
 config/
 ├── module.json                  ✅ Updated to v4.0.0
 ├── lang/en.json                 ✅ 50+ localization keys
-└── styles/ragnars-mark.css      ✅ Enhanced
+└── styles/ragnaroks-mark.css    ✅ Enhanced
 
 documentation/
 ├── README.md                    ✅ Updated with v4.0

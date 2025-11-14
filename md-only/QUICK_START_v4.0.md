@@ -10,7 +10,7 @@
 
 1. **Install the module**
    - Download from Foundry's Module Library
-   - Or manually place in `Data/modules/ragnars-mark/`
+   - Or manually place in `Data/modules/ragnaroks-mark/`
 
 2. **Enable it**
    - Open your Foundry world
@@ -48,7 +48,7 @@ With one click, RagNarok's Mark now:
 - The condition overlay appears automatically on all their tokens
 
 **Method 2: Quick Hotbar Buttons**
-- Create a macro: `RagnarsMarkAPI.toggleCondition(token.id, 'vulnerable')`
+- Create a macro: `RagnaroksMarkAPI.toggleCondition(token.id, 'vulnerable')`
 - Drag to hotbar
 - Click to toggle condition on selected token
 
@@ -223,7 +223,7 @@ See which conditions you use most:
 **Option 1 (Easiest):**
 ```javascript
 // Create a macro and click it
-RagnarsMarkAPI.addCondition(token.id, 'vulnerable')
+RagnaroksMarkAPI.addCondition(token.id, 'vulnerable')
 ```
 
 **Option 2:**
@@ -238,11 +238,11 @@ RagnarsMarkAPI.addCondition(token.id, 'vulnerable')
 ```javascript
 // Macro: Select multiple tokens, then run:
 for (let token of canvas.tokens.controlled) {
-  RagnarsMarkAPI.addCondition(token.id, 'vulnerable', 60000)
+   RagnaroksMarkAPI.addCondition(token.id, 'vulnerable', 60000)
 }
 
 // Or batch apply:
-RagnarsMarkAPI.batchApply(
+RagnaroksMarkAPI.batchApply(
   [token1.id, token2.id, token3.id],
   ['vulnerable', 'marked'],
   60000  // 60 seconds
@@ -253,9 +253,9 @@ RagnarsMarkAPI.batchApply(
 
 ```javascript
 // Get all conditions and remove them
-const conditions = RagnarsMarkAPI.getConditions(token.id)
+const conditions = RagnaroksMarkAPI.getConditions(token.id)
 for (let cond of conditions) {
-  RagnarsMarkAPI.removeCondition(token.id, cond)
+   RagnaroksMarkAPI.removeCondition(token.id, cond)
 }
 ```
 
@@ -392,10 +392,10 @@ const profile = {
 }
 
 // Save it
-RagnarsMarkAPI.saveProfile('cc-profile', profile)
+RagnaroksMarkAPI.saveProfile('cc-profile', profile)
 
 // Later: Load with one command
-RagnarsMarkAPI.applyProfile('cc-profile')
+RagnaroksMarkAPI.applyProfile('cc-profile')
 ```
 
 ### Auto-Apply Conditions at Combat Start
@@ -405,7 +405,7 @@ RagnarsMarkAPI.applyProfile('cc-profile')
 Hooks.on('combatStart', (combat) => {
   for (let combatant of combat.combatants) {
     if (combatant.isDefeated) {
-      RagnarsMarkAPI.addCondition(combatant.tokenId, 'defeated')
+   RagnaroksMarkAPI.addCondition(combatant.tokenId, 'defeated')
     }
   }
 })
@@ -415,8 +415,8 @@ Hooks.on('combatStart', (combat) => {
 
 ```javascript
 // End-of-session macro
-const report = RagnarsMarkAPI.generateCombatReport()
-const stats = RagnarsMarkAPI.getAllStats()
+const report = RagnaroksMarkAPI.generateCombatReport()
+const stats = RagnaroksMarkAPI.getAllStats()
 
 console.log(`
   Session Summary

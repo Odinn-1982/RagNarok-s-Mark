@@ -13,6 +13,9 @@
     }
   ],
   "esmodules": [
+    "scripts/overlay-init.js",
+    "scripts/overlay-renderer.js",
+    "scripts/overlay-config.js",
     "scripts/ragnaroks-mark.js",
     "scripts/features.js",
     "scripts/automation.js",

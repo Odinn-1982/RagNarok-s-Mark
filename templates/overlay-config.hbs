@@ -1,0 +1,91 @@
+<div class="ragnaroks-mark-overlay-config">
+  <div class="config-header">
+    <h2>Overlay Customization</h2>
+    <p>Customize how conditions appear as overlays on tokens and in the sidebar</p>
+  </div>
+
+  <div class="config-controls">
+    <button type="button" class="btn-enable-all">Enable All</button>
+    <button type="button" class="btn-disable-all">Disable All</button>
+    <button type="button" class="btn-reset-defaults">Reset to Defaults</button>
+  </div>
+
+  <div class="condition-list">
+    {{#each conditions}}
+      <div class="condition-row" data-condition-name="{{this.key}}">
+        <div class="condition-checkbox">
+          <input 
+            type="checkbox" 
+            name="condition-enabled-{{this.key}}" 
+            {{#if this.enabled}}checked{{/if}}
+            id="condition-{{this.key}}"
+          />
+          <label for="condition-{{this.key}}">{{this.name}}</label>
+        </div>
+
+        <div class="condition-controls">
+          <!-- Color Picker -->
+          <div class="control-group">
+            <label for="color-{{this.key}}">Color:</label>
+            <input 
+              type="color" 
+              name="condition-color-{{this.key}}"
+              value="{{this.color}}"
+              id="color-{{this.key}}"
+              class="color-picker"
+            />
+            <span class="color-preview" style="background-color: {{this.color}};"></span>
+          </div>
+
+          <!-- Scale (Size) -->
+          <div class="control-group">
+            <label for="scale-{{this.key}}">Size:</label>
+            <input 
+              type="range" 
+              name="condition-scale-{{this.key}}"
+              value="{{this.scale}}"
+              min="0.5"
+              max="2.0"
+              step="0.1"
+              id="scale-{{this.key}}"
+              class="scale-slider"
+            />
+            <span class="value-display">{{this.scale}}</span>
+          </div>
+
+          <!-- Glow Intensity -->
+          <div class="control-group">
+            <label for="glow-{{this.key}}">Glow:</label>
+            <input 
+              type="range" 
+              name="condition-glow-{{this.key}}"
+              value="{{this.glow}}"
+              min="0.0"
+              max="2.0"
+              step="0.1"
+              id="glow-{{this.key}}"
+              class="glow-slider"
+            />
+            <span class="value-display">{{this.glow}}</span>
+          </div>
+
+          <!-- Animation Type -->
+          <div class="control-group">
+            <label for="animation-{{this.key}}">Animation:</label>
+            <select name="condition-animation-{{this.key}}" id="animation-{{this.key}}" class="animation-select">
+              {{#each ../animationOptions}}
+                <option value="{{this.value}}" {{#if (eq this.value ../this.animation)}}selected{{/if}}>
+                  {{this.label}}
+                </option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+
+  <div class="config-footer">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </div>
+</div>

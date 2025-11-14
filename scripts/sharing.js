@@ -18,7 +18,7 @@ export const SHARING = {
   ratings: {},          // User's ratings of presets
 
   // Community server settings
-  communityServer: 'https://api.ragnarsmark.community',  // Example URL
+  communityServer: 'https://api.ragnaroksmark.community',  // Example URL
   apiKey: null,
   userId: null,
 
@@ -38,7 +38,7 @@ export const SHARING = {
    * @returns {object} Published preset info
    */
   publishPreset(presetName, metadata = {}) {
-    const preset = game.settings.get('ragnars-mark', 'customizationProfiles')?.[presetName];
+  const preset = game.settings.get('ragnaroks-mark', 'customizationProfiles')?.[presetName];
     if (!preset) {
       console.error(`Preset "${presetName}" not found`);
       return null;
@@ -95,7 +95,7 @@ export const SHARING = {
     };
 
     try {
-      game.settings.set('ragnars-mark', 'customizationProfiles', {
+  game.settings.set('ragnaroks-mark', 'customizationProfiles', {
         [localName]: imported
       });
       
@@ -250,7 +250,7 @@ export const SHARING = {
    * @returns {Blob} JSON blob for download
    */
   exportPresetAsJSON(presetName) {
-    const preset = game.settings.get('ragnars-mark', 'customizationProfiles')?.[presetName];
+  const preset = game.settings.get('ragnaroks-mark', 'customizationProfiles')?.[presetName];
     if (!preset) return null;
 
     const json = JSON.stringify({
@@ -359,7 +359,7 @@ export const SHARING = {
    */
   loadCommunityLibrary() {
     try {
-      const stored = game.settings.get('ragnars-mark', 'communityLibraryCache');
+  const stored = game.settings.get('ragnaroks-mark', 'communityLibraryCache');
       if (stored) {
         this.communityLibrary = JSON.parse(stored);
       }
@@ -374,7 +374,7 @@ export const SHARING = {
    */
   saveLocalLibrary() {
     try {
-      game.settings.set('ragnars-mark', 'userLibrary', JSON.stringify(this.userLibrary));
+  game.settings.set('ragnaroks-mark', 'userLibrary', JSON.stringify(this.userLibrary));
     } catch (e) {
       console.error('Failed to save user library:', e);
     }
@@ -385,7 +385,7 @@ export const SHARING = {
    */
   loadLocalLibrary() {
     try {
-      const stored = game.settings.get('ragnars-mark', 'userLibrary');
+  const stored = game.settings.get('ragnaroks-mark', 'userLibrary');
       if (stored) {
         this.userLibrary = JSON.parse(stored);
       }

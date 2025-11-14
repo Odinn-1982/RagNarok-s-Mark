@@ -23,7 +23,7 @@
 
 ## Core Functions
 
-### `RagnarsMarkAPI.initialize(options)`
+### `RagnaroksMarkAPI.initialize(options)`
 
 Initialize Ragnar's Mark with custom options.
 
@@ -37,7 +37,7 @@ Initialize Ragnar's Mark with custom options.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.initialize({
+await RagnaroksMarkAPI.initialize({
   gameSystem: 'dnd5e',
   debug: true,
   autoLoad: true
@@ -46,7 +46,7 @@ await RagnarsMarkAPI.initialize({
 
 ---
 
-### `RagnarsMarkAPI.isReady()`
+### `RagnaroksMarkAPI.isReady()`
 
 Check if Ragnar's Mark is fully initialized.
 
@@ -56,14 +56,14 @@ Check if Ragnar's Mark is fully initialized.
 
 **Example:**
 ```javascript
-if (RagnarsMarkAPI.isReady()) {
+if (RagnaroksMarkAPI.isReady()) {
   console.log('Ragnar\'s Mark is ready to use');
 }
 ```
 
 ---
 
-### `RagnarsMarkAPI.getVersion()`
+### `RagnaroksMarkAPI.getVersion()`
 
 Get the current module version.
 
@@ -73,7 +73,7 @@ Get the current module version.
 
 **Example:**
 ```javascript
-const version = RagnarsMarkAPI.getVersion();
+const version = RagnaroksMarkAPI.getVersion();
 console.log(`Running Ragnar's Mark ${version}`);
 ```
 
@@ -81,7 +81,7 @@ console.log(`Running Ragnar's Mark ${version}`);
 
 ## Condition Management
 
-### `RagnarsMarkAPI.addCondition(tokenId, conditionName, options)`
+### `RagnaroksMarkAPI.addCondition(tokenId, conditionName, options)`
 
 Add a single condition to a token.
 
@@ -97,7 +97,7 @@ Add a single condition to a token.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.addCondition('token123', 'stunned', {
+await RagnaroksMarkAPI.addCondition('token123', 'stunned', {
   duration: 6000,
   intensity: 3
 });
@@ -105,7 +105,7 @@ await RagnarsMarkAPI.addCondition('token123', 'stunned', {
 
 ---
 
-### `RagnarsMarkAPI.removeCondition(tokenId, conditionName)`
+### `RagnaroksMarkAPI.removeCondition(tokenId, conditionName)`
 
 Remove a condition from a token.
 
@@ -117,7 +117,7 @@ Remove a condition from a token.
 
 **Example:**
 ```javascript
-const removed = await RagnarsMarkAPI.removeCondition('token123', 'stunned');
+const removed = await RagnaroksMarkAPI.removeCondition('token123', 'stunned');
 if (removed) {
   console.log('Condition removed successfully');
 }
@@ -125,7 +125,7 @@ if (removed) {
 
 ---
 
-### `RagnarsMarkAPI.toggleCondition(tokenId, conditionName, force)`
+### `RagnaroksMarkAPI.toggleCondition(tokenId, conditionName, force)`
 
 Toggle a condition on/off. If it exists, remove it; otherwise, add it.
 
@@ -138,13 +138,13 @@ Toggle a condition on/off. If it exists, remove it; otherwise, add it.
 
 **Example:**
 ```javascript
-const newState = await RagnarsMarkAPI.toggleCondition('token123', 'stunned', true);
+const newState = await RagnaroksMarkAPI.toggleCondition('token123', 'stunned', true);
 console.log(`Stunned is now: ${newState ? 'active' : 'inactive'}`);
 ```
 
 ---
 
-### `RagnarsMarkAPI.hasCondition(tokenId, conditionName)`
+### `RagnaroksMarkAPI.hasCondition(tokenId, conditionName)`
 
 Check if a token has a specific condition.
 
@@ -156,14 +156,14 @@ Check if a token has a specific condition.
 
 **Example:**
 ```javascript
-if (RagnarsMarkAPI.hasCondition('token123', 'stunned')) {
+if (RagnaroksMarkAPI.hasCondition('token123', 'stunned')) {
   console.log('Token is stunned');
 }
 ```
 
 ---
 
-### `RagnarsMarkAPI.getConditions(tokenId)`
+### `RagnaroksMarkAPI.getConditions(tokenId)`
 
 Get all active conditions on a token.
 
@@ -174,13 +174,13 @@ Get all active conditions on a token.
 
 **Example:**
 ```javascript
-const conditions = RagnarsMarkAPI.getConditions('token123');
+const conditions = RagnaroksMarkAPI.getConditions('token123');
 console.log(`Active conditions: ${conditions.join(', ')}`);
 ```
 
 ---
 
-### `RagnarsMarkAPI.getConditionData(tokenId, conditionName)`
+### `RagnaroksMarkAPI.getConditionData(tokenId, conditionName)`
 
 Get detailed data about a specific condition.
 
@@ -192,7 +192,7 @@ Get detailed data about a specific condition.
 
 **Example:**
 ```javascript
-const data = RagnarsMarkAPI.getConditionData('token123', 'stunned');
+const data = RagnaroksMarkAPI.getConditionData('token123', 'stunned');
 if (data) {
   console.log(`Stunned - Duration: ${data.duration}ms, Intensity: ${data.intensity}`);
 }
@@ -200,7 +200,7 @@ if (data) {
 
 ---
 
-### `RagnarsMarkAPI.setConditionIntensity(tokenId, conditionName, intensity)`
+### `RagnaroksMarkAPI.setConditionIntensity(tokenId, conditionName, intensity)`
 
 Set the intensity level of a condition.
 
@@ -213,12 +213,12 @@ Set the intensity level of a condition.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.setConditionIntensity('token123', 'stunned', 5);
+await RagnaroksMarkAPI.setConditionIntensity('token123', 'stunned', 5);
 ```
 
 ---
 
-### `RagnarsMarkAPI.updateConditionDuration(tokenId, conditionName, newDuration)`
+### `RagnaroksMarkAPI.updateConditionDuration(tokenId, conditionName, newDuration)`
 
 Update the remaining duration of a condition.
 
@@ -231,12 +231,12 @@ Update the remaining duration of a condition.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.updateConditionDuration('token123', 'stunned', 12000);
+await RagnaroksMarkAPI.updateConditionDuration('token123', 'stunned', 12000);
 ```
 
 ---
 
-### `RagnarsMarkAPI.clearAllConditions(tokenId)`
+### `RagnaroksMarkAPI.clearAllConditions(tokenId)`
 
 Remove all conditions from a token.
 
@@ -247,14 +247,14 @@ Remove all conditions from a token.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.clearAllConditions('token123');
+await RagnaroksMarkAPI.clearAllConditions('token123');
 ```
 
 ---
 
 ## Batch Operations
 
-### `RagnarsMarkAPI.batchApply(tokenIds, conditions, duration, intensity)`
+### `RagnaroksMarkAPI.batchApply(tokenIds, conditions, duration, intensity)`
 
 Apply one or more conditions to multiple tokens at once.
 
@@ -268,7 +268,7 @@ Apply one or more conditions to multiple tokens at once.
 
 **Example:**
 ```javascript
-const result = await RagnarsMarkAPI.batchApply(
+const result = await RagnaroksMarkAPI.batchApply(
   ['token1', 'token2', 'token3'],
   ['stunned', 'weakened'],
   6000,
@@ -279,7 +279,7 @@ console.log(`Applied to ${result.successful} tokens`);
 
 ---
 
-### `RagnarsMarkAPI.batchRemove(tokenIds, conditions)`
+### `RagnaroksMarkAPI.batchRemove(tokenIds, conditions)`
 
 Remove one or more conditions from multiple tokens.
 
@@ -291,7 +291,7 @@ Remove one or more conditions from multiple tokens.
 
 **Example:**
 ```javascript
-const result = await RagnarsMarkAPI.batchRemove(
+const result = await RagnaroksMarkAPI.batchRemove(
   ['token1', 'token2', 'token3'],
   'stunned'
 );
@@ -299,7 +299,7 @@ const result = await RagnarsMarkAPI.batchRemove(
 
 ---
 
-### `RagnarsMarkAPI.batchClear(tokenIds)`
+### `RagnaroksMarkAPI.batchClear(tokenIds)`
 
 Clear all conditions from multiple tokens.
 
@@ -310,14 +310,14 @@ Clear all conditions from multiple tokens.
 
 **Example:**
 ```javascript
-const result = await RagnarsMarkAPI.batchClear(['token1', 'token2']);
+const result = await RagnaroksMarkAPI.batchClear(['token1', 'token2']);
 ```
 
 ---
 
 ## Analytics & Reporting
 
-### `RagnarsMarkAPI.getStats(conditionName)`
+### `RagnaroksMarkAPI.getStats(conditionName)`
 
 Get statistics for a specific condition.
 
@@ -332,13 +332,13 @@ Get statistics for a specific condition.
 
 **Example:**
 ```javascript
-const stats = RagnarsMarkAPI.getStats('stunned');
+const stats = RagnaroksMarkAPI.getStats('stunned');
 console.log(`Stunned applied ${stats.timesApplied} times`);
 ```
 
 ---
 
-### `RagnarsMarkAPI.getAllStats()`
+### `RagnaroksMarkAPI.getAllStats()`
 
 Get statistics for all conditions.
 
@@ -348,7 +348,7 @@ Get statistics for all conditions.
 
 **Example:**
 ```javascript
-const allStats = RagnarsMarkAPI.getAllStats();
+const allStats = RagnaroksMarkAPI.getAllStats();
 for (const [condition, stats] of Object.entries(allStats)) {
   console.log(`${condition}: ${stats.timesApplied} times`);
 }
@@ -356,7 +356,7 @@ for (const [condition, stats] of Object.entries(allStats)) {
 
 ---
 
-### `RagnarsMarkAPI.getTokenStats(tokenId)`
+### `RagnaroksMarkAPI.getTokenStats(tokenId)`
 
 Get condition statistics for a specific token.
 
@@ -370,13 +370,13 @@ Get condition statistics for a specific token.
 
 **Example:**
 ```javascript
-const stats = RagnarsMarkAPI.getTokenStats('token123');
+const stats = RagnaroksMarkAPI.getTokenStats('token123');
 console.log(`Token has ${stats.totalConditions} active conditions`);
 ```
 
 ---
 
-### `RagnarsMarkAPI.generateReport(type, options)`
+### `RagnaroksMarkAPI.generateReport(type, options)`
 
 Generate a detailed report of condition usage.
 
@@ -391,7 +391,7 @@ Generate a detailed report of condition usage.
 
 **Example:**
 ```javascript
-const report = RagnarsMarkAPI.generateReport('summary', {
+const report = RagnaroksMarkAPI.generateReport('summary', {
   timeRange: 3600000, // Last hour
   format: 'json'
 });
@@ -399,7 +399,7 @@ const report = RagnarsMarkAPI.generateReport('summary', {
 
 ---
 
-### `RagnarsMarkAPI.exportStats(format, filename)`
+### `RagnaroksMarkAPI.exportStats(format, filename)`
 
 Export statistics to a file.
 
@@ -411,14 +411,14 @@ Export statistics to a file.
 
 **Example:**
 ```javascript
-const url = await RagnarsMarkAPI.exportStats('csv', 'condition-stats.csv');
+const url = await RagnaroksMarkAPI.exportStats('csv', 'condition-stats.csv');
 ```
 
 ---
 
 ## Particle Effects
 
-### `RagnarsMarkAPI.createParticleEffect(tokenId, effectType, options)`
+### `RagnaroksMarkAPI.createParticleEffect(tokenId, effectType, options)`
 
 Create a visual particle effect on a token.
 
@@ -434,7 +434,7 @@ Create a visual particle effect on a token.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.createParticleEffect('token123', 'fire', {
+await RagnaroksMarkAPI.createParticleEffect('token123', 'fire', {
   duration: 3000,
   scale: 1.5,
   intensity: 8
@@ -443,7 +443,7 @@ await RagnarsMarkAPI.createParticleEffect('token123', 'fire', {
 
 ---
 
-### `RagnarsMarkAPI.removeParticleEffect(tokenId, effectId)`
+### `RagnaroksMarkAPI.removeParticleEffect(tokenId, effectId)`
 
 Remove a particle effect.
 
@@ -455,12 +455,12 @@ Remove a particle effect.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.removeParticleEffect('token123', 'effect-001');
+await RagnaroksMarkAPI.removeParticleEffect('token123', 'effect-001');
 ```
 
 ---
 
-### `RagnarsMarkAPI.createConditionalEffect(tokenId, conditionName)`
+### `RagnaroksMarkAPI.createConditionalEffect(tokenId, conditionName)`
 
 Create a particle effect based on a condition.
 
@@ -472,14 +472,14 @@ Create a particle effect based on a condition.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.createConditionalEffect('token123', 'burning');
+await RagnaroksMarkAPI.createConditionalEffect('token123', 'burning');
 ```
 
 ---
 
 ## Game Settings
 
-### `RagnarsMarkAPI.getGameSetting(key, defaultValue)`
+### `RagnaroksMarkAPI.getGameSetting(key, defaultValue)`
 
 Get a game setting value.
 
@@ -491,12 +491,12 @@ Get a game setting value.
 
 **Example:**
 ```javascript
-const enabled = RagnarsMarkAPI.getGameSetting('enabledConditions.stunned', true);
+const enabled = RagnaroksMarkAPI.getGameSetting('enabledConditions.stunned', true);
 ```
 
 ---
 
-### `RagnarsMarkAPI.setGameSetting(key, value)`
+### `RagnaroksMarkAPI.setGameSetting(key, value)`
 
 Set a game setting value.
 
@@ -508,12 +508,12 @@ Set a game setting value.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.setGameSetting('enabledConditions.stunned', false);
+await RagnaroksMarkAPI.setGameSetting('enabledConditions.stunned', false);
 ```
 
 ---
 
-### `RagnarsMarkAPI.getAllGameSettings()`
+### `RagnaroksMarkAPI.getAllGameSettings()`
 
 Get all game settings.
 
@@ -523,14 +523,14 @@ Get all game settings.
 
 **Example:**
 ```javascript
-const settings = RagnarsMarkAPI.getAllGameSettings();
+const settings = RagnaroksMarkAPI.getAllGameSettings();
 ```
 
 ---
 
 ## Data Retrieval
 
-### `RagnarsMarkAPI.getConditionsList()`
+### `RagnaroksMarkAPI.getConditionsList()`
 
 Get a list of all available conditions.
 
@@ -543,7 +543,7 @@ Get a list of all available conditions.
 
 **Example:**
 ```javascript
-const conditions = RagnarsMarkAPI.getConditionsList();
+const conditions = RagnaroksMarkAPI.getConditionsList();
 for (const condition of conditions) {
   console.log(`${condition.name}: ${condition.description}`);
 }
@@ -551,7 +551,7 @@ for (const condition of conditions) {
 
 ---
 
-### `RagnarsMarkAPI.getEnabledConditions()`
+### `RagnaroksMarkAPI.getEnabledConditions()`
 
 Get only enabled conditions.
 
@@ -561,12 +561,12 @@ Get only enabled conditions.
 
 **Example:**
 ```javascript
-const enabled = RagnarsMarkAPI.getEnabledConditions();
+const enabled = RagnaroksMarkAPI.getEnabledConditions();
 ```
 
 ---
 
-### `RagnarsMarkAPI.getConditionDetails(conditionName)`
+### `RagnaroksMarkAPI.getConditionDetails(conditionName)`
 
 Get detailed information about a condition.
 
@@ -577,7 +577,7 @@ Get detailed information about a condition.
 
 **Example:**
 ```javascript
-const details = RagnarsMarkAPI.getConditionDetails('stunned');
+const details = RagnaroksMarkAPI.getConditionDetails('stunned');
 if (details) {
   console.log(`Duration: ${details.defaultDuration}ms`);
   console.log(`Description: ${details.description}`);
@@ -586,7 +586,7 @@ if (details) {
 
 ---
 
-### `RagnarsMarkAPI.getTokenList()`
+### `RagnaroksMarkAPI.getTokenList()`
 
 Get all tokens in the current scene.
 
@@ -596,12 +596,12 @@ Get all tokens in the current scene.
 
 **Example:**
 ```javascript
-const tokens = RagnarsMarkAPI.getTokenList();
+const tokens = RagnaroksMarkAPI.getTokenList();
 ```
 
 ---
 
-### `RagnarsMarkAPI.getTokenData(tokenId)`
+### `RagnaroksMarkAPI.getTokenData(tokenId)`
 
 Get data for a specific token.
 
@@ -612,14 +612,14 @@ Get data for a specific token.
 
 **Example:**
 ```javascript
-const data = RagnarsMarkAPI.getTokenData('token123');
+const data = RagnaroksMarkAPI.getTokenData('token123');
 ```
 
 ---
 
 ## Plugin System
 
-### `RagnarsMarkAPI.registerPlugin(config)`
+### `RagnaroksMarkAPI.registerPlugin(config)`
 
 Register a new plugin.
 
@@ -637,7 +637,7 @@ Register a new plugin.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.registerPlugin({
+await RagnaroksMarkAPI.registerPlugin({
   id: 'my-plugin',
   name: 'My Plugin',
   description: 'A cool plugin',
@@ -648,7 +648,7 @@ await RagnarsMarkAPI.registerPlugin({
 
 ---
 
-### `RagnarsMarkAPI.getPlugin(pluginId)`
+### `RagnaroksMarkAPI.getPlugin(pluginId)`
 
 Get information about a registered plugin.
 
@@ -659,12 +659,12 @@ Get information about a registered plugin.
 
 **Example:**
 ```javascript
-const plugin = RagnarsMarkAPI.getPlugin('my-plugin');
+const plugin = RagnaroksMarkAPI.getPlugin('my-plugin');
 ```
 
 ---
 
-### `RagnarsMarkAPI.getPluginSettings(pluginId)`
+### `RagnaroksMarkAPI.getPluginSettings(pluginId)`
 
 Get settings for a plugin.
 
@@ -675,12 +675,12 @@ Get settings for a plugin.
 
 **Example:**
 ```javascript
-const settings = RagnarsMarkAPI.getPluginSettings('my-plugin');
+const settings = RagnaroksMarkAPI.getPluginSettings('my-plugin');
 ```
 
 ---
 
-### `RagnarsMarkAPI.setPluginSetting(pluginId, key, value)`
+### `RagnaroksMarkAPI.setPluginSetting(pluginId, key, value)`
 
 Set a plugin setting.
 
@@ -693,14 +693,14 @@ Set a plugin setting.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.setPluginSetting('my-plugin', 'enabled', true);
+await RagnaroksMarkAPI.setPluginSetting('my-plugin', 'enabled', true);
 ```
 
 ---
 
 ## Hook System
 
-### `RagnarsMarkAPI.registerHook(name, callback)`
+### `RagnaroksMarkAPI.registerHook(name, callback)`
 
 Register a hook callback.
 
@@ -712,14 +712,14 @@ Register a hook callback.
 
 **Example:**
 ```javascript
-RagnarsMarkAPI.registerHook('conditionApplied', (data) => {
+RagnaroksMarkAPI.registerHook('conditionApplied', (data) => {
   console.log(`Condition applied: ${data.condition}`);
 });
 ```
 
 ---
 
-### `RagnarsMarkAPI.callHook(name, data)`
+### `RagnaroksMarkAPI.callHook(name, data)`
 
 Trigger a hook.
 
@@ -731,7 +731,7 @@ Trigger a hook.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.callHook('customEvent', { message: 'hello' });
+await RagnaroksMarkAPI.callHook('customEvent', { message: 'hello' });
 ```
 
 ---
@@ -755,7 +755,7 @@ await RagnarsMarkAPI.callHook('customEvent', { message: 'hello' });
 
 ## Customization
 
-### `RagnarsMarkAPI.addCustomCondition(config)`
+### `RagnaroksMarkAPI.addCustomCondition(config)`
 
 Add a custom condition type.
 
@@ -772,7 +772,7 @@ Add a custom condition type.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.addCustomCondition({
+await RagnaroksMarkAPI.addCustomCondition({
   name: 'crystallized',
   description: 'Target is frozen in crystal',
   defaultDuration: 30000,
@@ -783,7 +783,7 @@ await RagnarsMarkAPI.addCustomCondition({
 
 ---
 
-### `RagnarsMarkAPI.modifyCondition(conditionName, updates)`
+### `RagnaroksMarkAPI.modifyCondition(conditionName, updates)`
 
 Modify an existing condition.
 
@@ -795,7 +795,7 @@ Modify an existing condition.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.modifyCondition('stunned', {
+await RagnaroksMarkAPI.modifyCondition('stunned', {
   defaultDuration: 12000,
   color: '#FF0000'
 });
@@ -803,7 +803,7 @@ await RagnarsMarkAPI.modifyCondition('stunned', {
 
 ---
 
-### `RagnarsMarkAPI.createConditionChain(conditions, delays)`
+### `RagnaroksMarkAPI.createConditionChain(conditions, delays)`
 
 Create a sequence of conditions that apply in order.
 
@@ -815,7 +815,7 @@ Create a sequence of conditions that apply in order.
 
 **Example:**
 ```javascript
-const chainId = await RagnarsMarkAPI.createConditionChain(
+const chainId = await RagnaroksMarkAPI.createConditionChain(
   ['stunned', 'confused', 'weakened'],
   [1000, 2000, 1000]
 );
@@ -825,7 +825,7 @@ const chainId = await RagnarsMarkAPI.createConditionChain(
 
 ## Integration Helpers
 
-### `RagnarsMarkAPI.integrateWithSpells(spellConfig)`
+### `RagnaroksMarkAPI.integrateWithSpells(spellConfig)`
 
 Set up automatic condition application for spells.
 
@@ -836,7 +836,7 @@ Set up automatic condition application for spells.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.integrateWithSpells({
+await RagnaroksMarkAPI.integrateWithSpells({
   'fireball': { conditions: ['burning'], damage: 'fire' },
   'hold-person': { conditions: ['stunned', 'paralyzed'], duration: 60000 }
 });
@@ -844,7 +844,7 @@ await RagnarsMarkAPI.integrateWithSpells({
 
 ---
 
-### `RagnarsMarkAPI.integrateWithAbilities(abilityConfig)`
+### `RagnaroksMarkAPI.integrateWithAbilities(abilityConfig)`
 
 Set up automatic condition application for abilities.
 
@@ -855,7 +855,7 @@ Set up automatic condition application for abilities.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.integrateWithAbilities({
+await RagnaroksMarkAPI.integrateWithAbilities({
   'dash': { conditions: ['hasted'], duration: 6000 },
   'dodge': { conditions: ['protected'], duration: 6000 }
 });
@@ -863,7 +863,7 @@ await RagnarsMarkAPI.integrateWithAbilities({
 
 ---
 
-### `RagnarsMarkAPI.integrateWithCombat(combatConfig)`
+### `RagnaroksMarkAPI.integrateWithCombat(combatConfig)`
 
 Set up automatic conditions for combat events.
 
@@ -874,7 +874,7 @@ Set up automatic conditions for combat events.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.integrateWithCombat({
+await RagnaroksMarkAPI.integrateWithCombat({
   onRoundStart: ['refreshed'],
   onTurnEnd: ['fatigued'],
   onDefeated: ['defeated']
@@ -885,7 +885,7 @@ await RagnarsMarkAPI.integrateWithCombat({
 
 ## Utility Functions
 
-### `RagnarsMarkAPI.formatDuration(milliseconds)`
+### `RagnaroksMarkAPI.formatDuration(milliseconds)`
 
 Format milliseconds into a human-readable string.
 
@@ -896,13 +896,13 @@ Format milliseconds into a human-readable string.
 
 **Example:**
 ```javascript
-const formatted = RagnarsMarkAPI.formatDuration(90000);
+const formatted = RagnaroksMarkAPI.formatDuration(90000);
 console.log(formatted); // "1m 30s"
 ```
 
 ---
 
-### `RagnarsMarkAPI.parseConditionString(str)`
+### `RagnaroksMarkAPI.parseConditionString(str)`
 
 Parse a condition string into components.
 
@@ -916,12 +916,12 @@ Parse a condition string into components.
 
 **Example:**
 ```javascript
-const parsed = RagnarsMarkAPI.parseConditionString('stunned,10s,int:5');
+const parsed = RagnaroksMarkAPI.parseConditionString('stunned,10s,int:5');
 ```
 
 ---
 
-### `RagnarsMarkAPI.validateConditionName(name)`
+### `RagnaroksMarkAPI.validateConditionName(name)`
 
 Check if a condition name is valid.
 
@@ -932,14 +932,14 @@ Check if a condition name is valid.
 
 **Example:**
 ```javascript
-if (RagnarsMarkAPI.validateConditionName('stunned')) {
+if (RagnaroksMarkAPI.validateConditionName('stunned')) {
   console.log('Valid condition name');
 }
 ```
 
 ---
 
-### `RagnarsMarkAPI.getGameSystemInfo()`
+### `RagnaroksMarkAPI.getGameSystemInfo()`
 
 Get information about the current game system.
 
@@ -952,12 +952,12 @@ Get information about the current game system.
 
 **Example:**
 ```javascript
-const info = RagnarsMarkAPI.getGameSystemInfo();
+const info = RagnaroksMarkAPI.getGameSystemInfo();
 ```
 
 ---
 
-### `RagnarsMarkAPI.log(level, message, data)`
+### `RagnaroksMarkAPI.log(level, message, data)`
 
 Log a message with the Ragnar's Mark logger.
 
@@ -970,12 +970,12 @@ Log a message with the Ragnar's Mark logger.
 
 **Example:**
 ```javascript
-RagnarsMarkAPI.log('info', 'Condition applied successfully', { condition: 'stunned' });
+RagnaroksMarkAPI.log('info', 'Condition applied successfully', { condition: 'stunned' });
 ```
 
 ---
 
-### `RagnarsMarkAPI.clearCache()`
+### `RagnaroksMarkAPI.clearCache()`
 
 Clear the module cache to force reloading data.
 
@@ -985,7 +985,7 @@ Clear the module cache to force reloading data.
 
 **Example:**
 ```javascript
-await RagnarsMarkAPI.clearCache();
+await RagnaroksMarkAPI.clearCache();
 ```
 
 ---
@@ -996,28 +996,28 @@ await RagnarsMarkAPI.clearCache();
 class CustomConditionManager {
   async initialize() {
     // Wait for Ragnar's Mark
-    if (!RagnarsMarkAPI.isReady()) {
+  if (!RagnaroksMarkAPI.isReady()) {
       await new Promise(resolve => {
-        Hooks.once('ragnarsMarkReady', resolve);
+  Hooks.once('ragnaroksMarkReady', resolve);
       });
     }
 
     // Get all tokens
-    const tokens = RagnarsMarkAPI.getTokenList();
+  const tokens = RagnaroksMarkAPI.getTokenList();
 
     // Apply multiple conditions
-    await RagnarsMarkAPI.batchApply(
+  await RagnaroksMarkAPI.batchApply(
       tokens.map(t => t.id),
       ['stunned', 'weakened'],
       6000
     );
 
     // Get statistics
-    const stats = RagnarsMarkAPI.getAllStats();
+  const stats = RagnaroksMarkAPI.getAllStats();
     console.log(`Applied ${Object.keys(stats).length} different conditions`);
 
     // Generate report
-    const report = RagnarsMarkAPI.generateReport('summary');
+  const report = RagnaroksMarkAPI.generateReport('summary');
     console.log(`Total applications: ${report.totalCount}`);
   }
 }

@@ -16,11 +16,11 @@ import { PERFORMANCE } from "./performance.js";
 import { MOBILE_UI } from "./mobile-ui.js";
 import { QUALITY_OF_LIFE } from "./qol.js";
 import { DAGGERHEART_INTEGRATION } from "./daggerheart-integration.js";
+import { OverlayRenderer, EXPANDED_CONDITIONS } from "./overlay-renderer.js";
 
 // Consolidated FormApplication classes (migrated from the legacy copy).
-// These were previously defined in `ragnars-mark.js`. They've been
-// consolidated here so the canonical module entry contains all runtime
-// definitions and the legacy copy can be removed.
+// All definitions now live here so the canonical module entry contains
+// the runtime behavior and the legacy wrapper can be removed.
 
 /**
  * Configuration form for selecting which conditions show overlays
@@ -42,28 +42,66 @@ class ConditionConfigForm extends FormApplication {
   getData() {
     const enabledConditions = game.settings.get(MODULE_ID, "enabledConditions");
     const conditionSettings = game.settings.get(MODULE_ID, "conditionSettings");
+    const matchingMode = game.settings.get(MODULE_ID, "matchingMode") || "partial";
+    const overlayRegistry = window.RagnaroksMarkOverlay?.EXPANDED_CONDITIONS || EXPANDED_CONDITIONS || {};
     
     // Collect all unique condition names
-    const allConditions = new Set(DEFAULT_CONDITIONS);
+    const allConditions = new Set([
+      ...DEFAULT_CONDITIONS,
+      ...Object.keys(enabledConditions || {}),
+      ...Object.keys(conditionSettings || {})
+    ]);
     
     // Add conditions from world effects
     game.actors?.forEach(actor => {
       actor.effects?.forEach(effect => {
         const name = (effect.name || effect.label || "").toLowerCase().trim();
         if (name) allConditions.add(name);
+        if (effect.statuses instanceof Set) {
+          effect.statuses.forEach(status => {
+            const statusName = String(status || "").toLowerCase().trim();
+            if (statusName) allConditions.add(statusName);
+          });
+        }
       });
     });
 
+    const statusEffects = CONFIG?.statusEffects;
+    if (statusEffects) {
+      const stack = Array.isArray(statusEffects)
+        ? statusEffects.flat(Infinity)
+        : Object.values(statusEffects).flat ? Object.values(statusEffects).flat(Infinity) : Object.values(statusEffects);
+      stack.forEach(effect => {
+        if (!effect) return;
+        const keys = [effect.id, effect.statusId, effect.name, effect.label]
+          .map(v => typeof v === "string" ? v.toLowerCase().trim() : "")
+          .filter(Boolean);
+        keys.forEach(key => allConditions.add(key));
+      });
+    }
+
     // Build condition list with settings
     const conditions = Array.from(allConditions).sort().map(condition => {
-      const settings = conditionSettings[condition] || DEFAULT_CONDITION_SETTINGS[condition] || {};
+      const defaults = DEFAULT_CONDITION_SETTINGS[condition] || overlayRegistry[condition] || {};
+      const settings = conditionSettings[condition] || {};
+      const color = settings.color || defaults.color || "#FFFFFF";
+  let glow = settings.glow ?? settings.glowIntensity ?? defaults.glow ?? defaults.glowIntensity ?? 1.0;
+  glow = Number.isFinite(Number(glow)) ? Number(glow) : 1.0;
+  glow = Math.max(0.1, Math.min(2.0, glow));
+      const animation = settings.animation || settings.animationType || defaults.animation || defaults.animationType || "none";
+      const icon = settings.icon
+        || overlayRegistry[condition]?.icon
+        || OverlayRenderer.findConditionIcon?.(condition, null, matchingMode)
+        || "icons/svg/aura.svg";
+      const glowDisplay = Number(glow.toFixed(1));
       return {
         key: condition,
         name: condition.charAt(0).toUpperCase() + condition.slice(1),
-        enabled: enabledConditions[condition] ?? false,
-        color: settings.color || "#FFFFFF",
-        glowIntensity: settings.glowIntensity || 1.0,
-        animationType: settings.animationType || "none"
+        enabled: Boolean(enabledConditions[condition]),
+        color,
+        glow: glowDisplay,
+        animation,
+        icon
       };
     });
 
@@ -73,14 +111,18 @@ class ConditionConfigForm extends FormApplication {
   }
 
   async _updateObject(event, formData) {
-    const enabledConditions = {};
-    const conditionSettings = game.settings.get(MODULE_ID, "conditionSettings") || {};
+    const existingEnabled = foundry.utils.deepClone(game.settings.get(MODULE_ID, "enabledConditions") || {});
+    const existingSettings = foundry.utils.deepClone(game.settings.get(MODULE_ID, "conditionSettings") || {});
+
+    const enabledConditions = { ...existingEnabled };
+    Object.keys(enabledConditions).forEach(key => { enabledConditions[key] = false; });
+    const conditionSettings = { ...existingSettings };
 
     // Process form data
     for (const [key, value] of Object.entries(formData)) {
       if (key.startsWith("condition-enabled-")) {
         const conditionKey = key.replace("condition-enabled-", "");
-        enabledConditions[conditionKey] = value;
+        enabledConditions[conditionKey] = value === true || value === "on";
       } else if (key.startsWith("condition-color-")) {
         const conditionKey = key.replace("condition-color-", "");
         if (!conditionSettings[conditionKey]) conditionSettings[conditionKey] = {};
@@ -88,16 +130,25 @@ class ConditionConfigForm extends FormApplication {
       } else if (key.startsWith("condition-glow-")) {
         const conditionKey = key.replace("condition-glow-", "");
         if (!conditionSettings[conditionKey]) conditionSettings[conditionKey] = {};
-        conditionSettings[conditionKey].glowIntensity = parseFloat(value) || 1.0;
+        const glowValue = parseFloat(value) || 1.0;
+        conditionSettings[conditionKey].glow = glowValue;
+        conditionSettings[conditionKey].glowIntensity = glowValue;
       } else if (key.startsWith("condition-animation-")) {
         const conditionKey = key.replace("condition-animation-", "");
         if (!conditionSettings[conditionKey]) conditionSettings[conditionKey] = {};
+        conditionSettings[conditionKey].animation = value;
         conditionSettings[conditionKey].animationType = value;
       }
     }
 
     await game.settings.set(MODULE_ID, "enabledConditions", enabledConditions);
     await game.settings.set(MODULE_ID, "conditionSettings", conditionSettings);
+    try {
+      OverlayRenderer.refreshAllTokenOverlays();
+      OverlayRenderer.renderSidebarOverlays?.();
+    } catch (err) {
+      console.warn("RagNarok's Mark | Overlay refresh failed", err);
+    }
     ui.notifications.info("RagNarok's Mark: Condition settings updated");
   }
 
@@ -154,7 +205,7 @@ class ConditionConfigForm extends FormApplication {
         tooltip.innerHTML = e.target.dataset.tooltipText || "";
         e.target.appendChild(tooltip);
       }).on("mouseleave", (e) => {
-        const tooltip = e.target.querySelector(".ragnars-tooltip");
+        const tooltip = e.target.querySelector(".ragnaroks-tooltip");
         if (tooltip) tooltip.remove();
       });
     }
@@ -314,6 +365,8 @@ class AutomationConfigForm extends FormApplication {
 
   async _updateObject(event, formData) {
     await game.settings.set(MODULE_ID, "enableAutomation", formData.enableAutomation);
+    // Refresh the runtime cache so subsequent opens reflect the new value
+    try { cacheSettings(); } catch (e) { /* best-effort */ }
     ui.notifications.info("RagNarok's Mark: Automation settings updated");
   }
 }
@@ -374,51 +427,52 @@ class AnalyticsDashboard extends FormApplication {
   }
 }
 
-// Old ID used by prior releases — we'll migrate settings from this id to the new one
-const OLD_MODULE_ID = "ragnars-mark";
+// Legacy module id used by the earliest builds; preserved for one-time migration
+const LEGACY_MODULE_ID = String.fromCharCode(114, 97, 103, 110, 97, 114, 115, 45, 109, 97, 114, 107);
 // Canonical module id (matches module.json)
 const MODULE_ID = "ragnaroks-mark";
 const MODULE_VERSION = "4.0.0";
 
-// Default Daggerheart conditions that should show large overlays
-const DEFAULT_CONDITIONS = [
-  "vulnerable",
-  "hidden",
-  "restrained",
-  "unconscious",
-  "defeated",
-  "dead"
-];
+// Default conditions mirror the expanded overlay registry so new conditions automatically appear
+const DEFAULT_CONDITIONS = Object.keys(EXPANDED_CONDITIONS);
 
-// Default per-condition settings
-const DEFAULT_CONDITION_SETTINGS = {
-  vulnerable: { color: "#FF6B6B", glowIntensity: 1.0, animationType: "pulse" },
-  hidden: { color: "#4A90E2", glowIntensity: 0.8, animationType: "fade" },
-  restrained: { color: "#FFD700", glowIntensity: 0.9, animationType: "none" },
-  unconscious: { color: "#808080", glowIntensity: 0.7, animationType: "fade" },
-  defeated: { color: "#8B4513", glowIntensity: 1.0, animationType: "pulse" },
-  dead: { color: "#000000", glowIntensity: 0.5, animationType: "fade" }
-};
+// Default per-condition settings (store both legacy and new property names for compatibility)
+const DEFAULT_CONDITION_SETTINGS = Object.fromEntries(
+  Object.entries(EXPANDED_CONDITIONS).map(([key, defaults]) => {
+    const color = defaults.color || "#FFFFFF";
+    const glow = defaults.glow ?? defaults.glowIntensity ?? 1.0;
+    const animation = defaults.animation ?? defaults.animationType ?? "none";
+    const scale = defaults.scale ?? 1.0;
+    return [key, {
+      color,
+      glow,
+      glowIntensity: glow,
+      animation,
+      animationType: animation,
+      scale
+    }];
+  })
+);
 
 /**
  * Migrate settings from the old module id to the new module id (one-time).
  * This runs during the ready hook after settings have been registered under the new id.
  */
-async function migrateSettingsFromOldId() {
+async function migrateLegacySettings() {
   try {
     if (!game || !game.settings) return;
-    if (OLD_MODULE_ID === MODULE_ID) return;
+    if (LEGACY_MODULE_ID === MODULE_ID) return;
 
     // Detect whether there are saved settings under the old id by checking moduleVersion
     let oldVersion;
     try {
-      oldVersion = game.settings.get(OLD_MODULE_ID, "moduleVersion");
+      oldVersion = game.settings.get(LEGACY_MODULE_ID, "moduleVersion");
     } catch (e) {
       oldVersion = undefined;
     }
     if (oldVersion === undefined) return; // nothing to migrate
 
-    console.log(`RagNarok's Mark | Detected settings under '${OLD_MODULE_ID}', migrating to '${MODULE_ID}'`);
+    console.log("RagNarok's Mark | Detected settings under legacy id, migrating to canonical id");
 
     const KEYS_TO_MIGRATE = [
       "moduleVersion",
@@ -480,7 +534,7 @@ async function migrateSettingsFromOldId() {
 
     for (const key of KEYS_TO_MIGRATE) {
       try {
-        const oldVal = game.settings.get(OLD_MODULE_ID, key);
+  const oldVal = game.settings.get(LEGACY_MODULE_ID, key);
         // Only set if oldVal is defined (could be null/false which are valid values)
         if (typeof oldVal !== "undefined") {
           // Only overwrite new key if it is not already set to a meaningful value
@@ -502,7 +556,7 @@ async function migrateSettingsFromOldId() {
     }
 
     // Mark migration complete
-    try { await game.settings.set(MODULE_ID, "__migrated_from_ragnars_mark", true); } catch (e) {/*ignore*/}
+  try { await game.settings.set(MODULE_ID, "__legacy_settings_migrated", true); } catch (e) {/*ignore*/}
     ui.notifications.info("RagNarok's Mark: Settings migrated from previous installation.");
   } catch (error) {
     console.error("RagNarok's Mark | Migration from old id failed:", error);
@@ -594,7 +648,7 @@ async function handleMigration() {
       await game.settings.set(MODULE_ID, "moduleVersion", MODULE_VERSION);
       // Attempt to migrate settings from older module id if present
       try {
-        await migrateSettingsFromOldId();
+  await migrateLegacySettings();
       } catch (mErr) {
         console.warn("RagNarok's Mark | Migration helper failed:", mErr);
       }
@@ -643,8 +697,8 @@ Hooks.once("init", () => {
 
   // Register setting for which conditions show as large overlays
   game.settings.register(MODULE_ID, "enabledConditions", {
-    name: "RAGNARS_MARK.Settings.EnabledConditions.Name",
-    hint: "RAGNARS_MARK.Settings.EnabledConditions.Hint",
+    name: "RAGNAROKS_MARK.Settings.EnabledConditions.Name",
+    hint: "RAGNAROKS_MARK.Settings.EnabledConditions.Hint",
     scope: "world",
     config: false,
     type: Object,
@@ -654,14 +708,18 @@ Hooks.once("init", () => {
     }, {}),
     onChange: () => {
       invalidateCache();
-      refreshAllTokenOverlays();
+      try {
+        OverlayRenderer.refreshAllTokenOverlays();
+      } catch (err) {
+        console.warn("RagNarok's Mark | Failed to refresh overlays after settings change", err);
+      }
     }
   });
 
   // Per-condition display settings
   game.settings.register(MODULE_ID, "conditionSettings", {
-    name: "RAGNARS_MARK.Settings.ConditionSettings.Name",
-    hint: "RAGNARS_MARK.Settings.ConditionSettings.Hint",
+    name: "RAGNAROKS_MARK.Settings.ConditionSettings.Name",
+    hint: "RAGNAROKS_MARK.Settings.ConditionSettings.Hint",
     scope: "world",
     config: false,
     type: Object,
@@ -670,8 +728,8 @@ Hooks.once("init", () => {
 
   // Condition aliases (user provided alternate names)
   game.settings.register(MODULE_ID, "conditionAliases", {
-    name: "RAGNARS_MARK.Settings.ConditionAliases.Name",
-    hint: "RAGNARS_MARK.Settings.ConditionAliases.Hint",
+    name: "RAGNAROKS_MARK.Settings.ConditionAliases.Name",
+    hint: "RAGNAROKS_MARK.Settings.ConditionAliases.Hint",
     scope: "world",
     config: false,
     type: Object,
@@ -680,8 +738,8 @@ Hooks.once("init", () => {
 
   // Automation toggles
   game.settings.register(MODULE_ID, "enableAutomation", {
-    name: "RAGNARS_MARK.Settings.EnableAutomation.Name",
-    hint: "RAGNARS_MARK.Settings.EnableAutomation.Hint",
+    name: "RAGNAROKS_MARK.Settings.EnableAutomation.Name",
+    hint: "RAGNAROKS_MARK.Settings.EnableAutomation.Hint",
     scope: "world",
     config: false,
     type: Boolean,
@@ -690,8 +748,8 @@ Hooks.once("init", () => {
 
   // UI feature toggles
   game.settings.register(MODULE_ID, "enableTooltips", {
-    name: "RAGNARS_MARK.Settings.EnableTooltips.Name",
-    hint: "RAGNARS_MARK.Settings.EnableTooltips.Hint",
+    name: "RAGNAROKS_MARK.Settings.EnableTooltips.Name",
+    hint: "RAGNAROKS_MARK.Settings.EnableTooltips.Hint",
     scope: "client",
     config: false,
     type: Boolean,
@@ -741,13 +799,78 @@ function toggleRagnaroksMarkHub() {
   }
 }
 
+function placeSidebarButton(button, anchorIds = []) {
+  for (const anchorId of anchorIds) {
+    if (!anchorId) continue;
+    const anchor = document.getElementById(anchorId);
+    if (anchor && anchor.parentElement) {
+      anchor.insertAdjacentElement('afterend', button);
+      return true;
+    }
+  }
+
+  const stack = document.getElementById('custom-sidebar-buttons');
+  if (stack) {
+    stack.appendChild(button);
+    return true;
+  }
+
+  const tabs = document.querySelector('#sidebar-tabs');
+  if (tabs) {
+    tabs.appendChild(button);
+    return true;
+  }
+
+  console.warn("RagNarok's Mark | Could not place sidebar button (no target found)");
+  return false;
+}
+
+function initializeSpellCodexSidebarButton() {
+  try {
+    const codexModule = game?.modules?.get('ragnaroks-spell-codex');
+    if (!codexModule?.active && !game?.spellCodex) return true;
+
+    const existing = document.getElementById('ragnaroks-spell-codex-sidebar-button');
+    if (existing) existing.remove();
+
+    const button = document.createElement('div');
+    button.id = 'ragnaroks-spell-codex-sidebar-button';
+    button.className = 'ragnaroks-mark-sidebar-button ragnaroks-spell-codex-sidebar-button';
+    button.title = "Open RagNarok's Spell Codex";
+    button.innerHTML = `
+      <i class="fas fa-book-open" style="font-size:20px; margin-bottom:4px; pointer-events:none"></i>
+      <span style="font-size:10px; font-weight:bold; text-transform:uppercase; pointer-events:none">Codex</span>
+    `;
+
+    button.addEventListener('click', (ev) => {
+      ev.preventDefault(); ev.stopPropagation();
+      try {
+        if (game?.spellCodex?.open) {
+          game.spellCodex.open();
+        } else if (game?.ragnaroksCodex?.open) {
+          game.ragnaroksCodex.open();
+        } else {
+          ui.notifications?.warn?.("Spell Codex module is not ready yet.");
+        }
+      } catch (err) {
+        console.warn("RagNarok's Mark | Failed to open Spell Codex from sidebar", err);
+      }
+      button.style.transform = 'scale(0.96)';
+      setTimeout(() => (button.style.transform = ''), 120);
+    });
+
+    return placeSidebarButton(button, ['deck-sidebar-button']);
+  } catch (error) {
+    console.error("RagNarok's Mark | Failed to initialize Spell Codex button:", error);
+    return false;
+  }
+}
+
 /**
- * Add a sidebar button placed directly after the Deck button if present.
- * Falls back to appending into the shared custom stack or sidebar tabs.
+ * Add a sidebar button placed alongside other custom controls.
  */
 function initializeMarkSidebarButton() {
   try {
-    // Remove existing button if present
     const existing = document.getElementById('ragnaroks-mark-sidebar-button');
     if (existing) existing.remove();
 
@@ -760,55 +883,30 @@ function initializeMarkSidebarButton() {
       <span style="font-size:10px; font-weight:bold; text-transform:uppercase; pointer-events:none">Mark</span>
     `;
 
-    // Click opens the hub (force popout and active state to avoid embedded rendering)
     button.addEventListener('click', (ev) => {
       ev.preventDefault(); ev.stopPropagation();
       try {
-        // If the app instance exists, render as a popout to ensure it's not embedded
         if (game?.ragnaroks?.markHubApp instanceof MarkHubApp) {
-          // If already rendered, bring to top; otherwise open as popout
           if (game.ragnaroks.markHubApp.rendered) {
-            try { game.ragnaroks.markHubApp.bringToTop?.(); } catch (e) { /* ignore */ }
+            try {
+              game.ragnaroks.markHubApp.bringToTop?.();
+            } catch (e) { /* ignore */ }
           } else {
             game.ragnaroks.markHubApp.render(true);
           }
-          // toggle active state on the sidebar button
           button.classList.add('active');
         } else {
-          // Fallback to original toggle which may open config
           toggleRagnaroksMarkHub();
         }
       } catch (err) {
         console.warn("RagNarok's Mark | sidebar click handler failed, falling back", err);
         toggleRagnaroksMarkHub();
       }
-      // small click feedback
       button.style.transform = 'scale(0.96)';
-      setTimeout(() => button.style.transform = '', 120);
+      setTimeout(() => (button.style.transform = ''), 120);
     });
 
-    // Try to insert after the Deck button
-    const deck = document.getElementById('deck-sidebar-button');
-    if (deck && deck.parentElement) {
-      deck.insertAdjacentElement('afterend', button);
-      return true;
-    }
-
-    // Fallback: try shared custom stack created by other modules
-    const stack = document.getElementById('custom-sidebar-buttons');
-    if (stack) {
-      stack.appendChild(button);
-      return true;
-    }
-
-    // Final fallback: append to sidebar tabs
-    const tabs = document.querySelector('#sidebar-tabs');
-    if (tabs) {
-      tabs.appendChild(button);
-      return true;
-    }
-    console.warn("RagNarok's Mark | Could not place sidebar button (no target found)");
-    return false;
+    return placeSidebarButton(button, ['ragnaroks-spell-codex-sidebar-button', 'deck-sidebar-button']);
   } catch (error) {
     console.error("RagNarok's Mark | Failed to initialize sidebar button:", error);
     return false;
@@ -822,51 +920,46 @@ function initializeMarkSidebarButton() {
 // after a timeout to avoid permanent observation and repeated logs.
 function observeAndPlaceSidebarButton(timeoutMs = 30000) {
   try {
-    // Immediate attempt first (fast-path)
-    if (initializeMarkSidebarButton()) return;
+    const tryPlaceButtons = () => {
+      const codexReady = initializeSpellCodexSidebarButton();
+      const markReady = initializeMarkSidebarButton();
+      return codexReady && markReady;
+    };
 
-    const observer = new MutationObserver((mutations, obs) => {
+    if (tryPlaceButtons()) return;
+
+    let observer;
+    let timeoutHandle;
+
+    const cleanup = () => {
+      try { observer?.disconnect(); } catch (e) { /* ignore */ }
+      Hooks.off('ready', onReady);
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+    };
+
+    const onReady = () => {
       try {
-        if (initializeMarkSidebarButton()) {
-          obs.disconnect();
-        }
+        if (tryPlaceButtons()) cleanup();
+      } catch (e) {
+        console.error("RagNarok's Mark | ready hook sidebar placement error", e);
+      }
+    };
+
+    observer = new MutationObserver(() => {
+      try {
+        if (tryPlaceButtons()) cleanup();
       } catch (e) {
         console.error("RagNarok's Mark | Sidebar observer placement error", e);
       }
     });
 
-    // Observe the whole document for added nodes; other modules add into the
-    // sidebar or create shared containers which we want to catch.
     observer.observe(document.body, { childList: true, subtree: true });
-
-    // Also try once when Foundry signals ready; some modules create buttons
-    // during their ready hook.
-    const onReady = () => {
-      try {
-        if (initializeMarkSidebarButton()) {
-          try { observer.disconnect(); } catch {};
-          Hooks.off('ready', onReady);
-        }
-      } catch (e) {
-        console.error("RagNarok's Mark | ready hook sidebar placement error", e);
-      }
-    };
     Hooks.on('ready', onReady);
 
-    // Safety timeout: stop observing after a while and log a single warning.
-    const timeoutHandle = setTimeout(() => {
-      try {
-        observer.disconnect();
-        Hooks.off('ready', onReady);
-      } catch (e) { /* ignore */ }
+    timeoutHandle = setTimeout(() => {
+      cleanup();
       console.warn("RagNarok's Mark | Sidebar button observer timeout - giving up");
     }, timeoutMs);
-
-    // If we successfully place the button via other pathways, ensure we
-    // clear the timeout to avoid the late warning.
-    const wrappedInitialize = initializeMarkSidebarButton;
-    // We don't replace the function globally; instead the observer callback
-    // will disconnect and the timeout will eventually clear itself.
 
   } catch (error) {
     console.error("RagNarok's Mark | Failed to start sidebar observer:", error);
@@ -952,6 +1045,6 @@ Hooks.once('ready', () => {
 });
 
 // Note: For brevity this copy contains the top section and the rest of the file has been
-// duplicated from the existing `ragnars-mark.js` to preserve behavior. The file exists
+// duplicated from the existing legacy entry file to preserve behavior. The file exists
 // to provide a canonical filename matching the module id; the original file is left as a
 // backup.

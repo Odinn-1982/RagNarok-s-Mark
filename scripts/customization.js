@@ -66,7 +66,7 @@ export const CUSTOMIZATION = {
     try {
       // Apply profile settings
       for (const [key, value] of Object.entries(profile.settings)) {
-        game.settings.set('ragnars-mark', key, value);
+  game.settings.set('ragnaroks-mark', key, value);
       }
       return true;
     } catch (e) {
@@ -312,7 +312,7 @@ export const CUSTOMIZATION = {
    */
   saveProfiles() {
     try {
-      game.settings.set('ragnars-mark', 'customizationProfiles', JSON.stringify(this.profiles));
+  game.settings.set('ragnaroks-mark', 'customizationProfiles', JSON.stringify(this.profiles));
     } catch (e) {
       console.error('Failed to save customization profiles:', e);
     }
@@ -323,7 +323,7 @@ export const CUSTOMIZATION = {
    */
   loadProfiles() {
     try {
-      const stored = game.settings.get('ragnars-mark', 'customizationProfiles');
+  const stored = game.settings.get('ragnaroks-mark', 'customizationProfiles');
       if (stored) {
         this.profiles = JSON.parse(stored);
       }
@@ -337,7 +337,7 @@ export const CUSTOMIZATION = {
    */
   saveCustomEffects() {
     try {
-      game.settings.set('ragnars-mark', 'customEffects', JSON.stringify(this.customEffects));
+  game.settings.set('ragnaroks-mark', 'customEffects', JSON.stringify(this.customEffects));
     } catch (e) {
       console.error('Failed to save custom effects:', e);
     }
@@ -348,7 +348,7 @@ export const CUSTOMIZATION = {
    */
   loadCustomEffects() {
     try {
-      const stored = game.settings.get('ragnars-mark', 'customEffects');
+  const stored = game.settings.get('ragnaroks-mark', 'customEffects');
       if (stored) {
         this.customEffects = JSON.parse(stored);
       }

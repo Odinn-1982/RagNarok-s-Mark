@@ -1,4 +1,4 @@
-<form id="ragnars-mark-automation-config" class="ragnars-form">
+<form id="ragnaroks-mark-automation-config" class="ragnaroks-form">
   <fieldset>
     <legend>Automation Controls</legend>
     
@@ -43,15 +43,15 @@
     <div class="section-divider"></div>
 
     <h3>Developer API</h3>
-    <p class="code-hint">Use <code>window.RagnarsMarkAPI</code> to manage conditions programmatically:</p>
+  <p class="code-hint">Use <code>window.RagnaroksMarkAPI</code> to manage conditions programmatically:</p>
     <pre><code>// Add condition to token
-RagnarsMarkAPI.addCondition(tokenId, 'vulnerable', 300);
+RagnaroksMarkAPI.addCondition(tokenId, 'vulnerable', 300);
 
 // Remove condition
-RagnarsMarkAPI.removeCondition(tokenId, 'vulnerable');
+RagnaroksMarkAPI.removeCondition(tokenId, 'vulnerable');
 
 // Batch apply to multiple tokens
-RagnarsMarkAPI.batchApply([token1, token2], ['vulnerable', 'weakened']);</code></pre>
+RagnaroksMarkAPI.batchApply([token1, token2], ['vulnerable', 'weakened']);</code></pre>
   </fieldset>
 
   <div class="form-buttons">
@@ -60,38 +60,38 @@ RagnarsMarkAPI.batchApply([token1, token2], ['vulnerable', 'weakened']);</code><
 </form>
 
 <style>
-  #ragnars-mark-automation-config .section-divider {
+  #ragnaroks-mark-automation-config .section-divider {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     margin: 20px 0;
   }
 
-  #ragnars-mark-automation-config .chains-list,
-  #ragnars-mark-automation-config .rules-list {
+  #ragnaroks-mark-automation-config .chains-list,
+  #ragnaroks-mark-automation-config .rules-list {
     background: rgba(0, 0, 0, 0.3);
     padding: 10px;
     border-radius: 4px;
     margin: 10px 0;
   }
 
-  #ragnars-mark-automation-config .chain-item,
-  #ragnars-mark-automation-config .rule-item {
+  #ragnaroks-mark-automation-config .chain-item,
+  #ragnaroks-mark-automation-config .rule-item {
     padding: 5px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  #ragnars-mark-automation-config .empty-state {
+  #ragnaroks-mark-automation-config .empty-state {
     color: rgba(255, 255, 255, 0.6);
     font-style: italic;
   }
 
-  #ragnars-mark-automation-config code {
+  #ragnaroks-mark-automation-config code {
     background: rgba(0, 0, 0, 0.5);
     padding: 2px 4px;
     border-radius: 2px;
     font-family: monospace;
   }
 
-  #ragnars-mark-automation-config pre {
+  #ragnaroks-mark-automation-config pre {
     background: rgba(0, 0, 0, 0.4);
     padding: 10px;
     border-radius: 4px;

@@ -506,7 +506,7 @@ export const ADVANCED_ANALYTICS = {
    */
   saveReports() {
     try {
-      game.settings.set('ragnars-mark', 'advancedAnalyticsReports', JSON.stringify(this.reports));
+  game.settings.set('ragnaroks-mark', 'advancedAnalyticsReports', JSON.stringify(this.reports));
     } catch (e) {
       console.error('Failed to save advanced analytics reports:', e);
     }
@@ -517,7 +517,7 @@ export const ADVANCED_ANALYTICS = {
    */
   loadReports() {
     try {
-      const stored = game.settings.get('ragnars-mark', 'advancedAnalyticsReports');
+  const stored = game.settings.get('ragnaroks-mark', 'advancedAnalyticsReports');
       if (stored) {
         this.reports = JSON.parse(stored);
       }

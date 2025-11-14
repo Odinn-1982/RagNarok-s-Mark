@@ -84,16 +84,79 @@
   pointer-events: auto !important;
 }
 
-/* Sidebar button to sit next to Deck (when present) */
-#ragnaroks-mark-sidebar-button, #ragnaroks-mark-sidebar-button * {
+/* Sidebar buttons to sit next to Deck (when present) */
+.ragnaroks-mark-sidebar-button,
+.ragnaroks-mark-sidebar-button * {
   box-sizing: border-box;
 }
-#ragnaroks-mark-sidebar-button {
-  display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important;
-  padding:12px 8px !important; cursor:pointer !important; background: rgba(0,0,0,0.8) !important; border:1px solid #e10606 !important;
-  margin:0 !important; border-radius:4px !important; transition: all 0.2s ease !important; color:#e10606 !important;
-  min-height:48px !important; width:48px !important; user-select:none !important; pointer-events:auto !important; z-index:100 !important;
+.ragnaroks-mark-sidebar-button {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:2px !important;
+  padding:12px 8px !important;
+  margin:0 0 6px 0 !important;
+  width:48px !important;
+  min-height:48px !important;
+  border-radius:4px !important;
+  border:1px solid rgba(225,6,6,0.8) !important;
+  background: rgba(12, 0, 0, 0.72) !important;
+  color:#ff4141 !important;
+  text-transform:uppercase !important;
+  font-weight:700 !important;
+  font-size:10px !important;
+  letter-spacing:0.06em !important;
+  cursor:pointer !important;
+  transition: all 0.18s ease !important;
+  user-select:none !important;
+  pointer-events:auto !important;
+  z-index:100 !important;
+  text-align:center !important;
+  line-height:1.1 !important;
 }
-#ragnaroks-mark-sidebar-button:hover { background: rgba(225,6,6,0.2); border-color:#ff2222; color:#ff2222; transform: scale(1.05); }
-/* Active state matching sidebar buttons */
-#ragnaroks-mark-sidebar-button.active { background: rgba(255,34,34,0.18); border-color: #ff4444; color: #ff4444; transform: scale(1.03); }
+
+.ragnaroks-mark-sidebar-button i {
+  font-size:20px !important;
+  color:inherit !important;
+}
+
+.ragnaroks-mark-sidebar-button span {
+  display:block !important;
+  width:100% !important;
+  color:inherit !important;
+}
+
+.ragnaroks-mark-sidebar-button:hover {
+  background: rgba(225, 6, 6, 0.16) !important;
+  border-color:#ff4545 !important;
+  color:#ff5c5c !important;
+  transform: translateY(-1px) !important;
+}
+
+.ragnaroks-mark-sidebar-button.active {
+  background: rgba(255, 34, 34, 0.2) !important;
+  border-color:#ff6666 !important;
+  color:#ff7676 !important;
+  box-shadow:0 0 12px rgba(255, 68, 68, 0.35) !important;
+}
+
+/* Slightly different tint for the Codex launcher so users can distinguish it quickly */
+#ragnaroks-spell-codex-sidebar-button {
+  border-color: rgba(255, 210, 120, 0.85) !important;
+  background: rgba(26, 10, 0, 0.82) !important;
+  color: #ffd26b !important;
+}
+
+#ragnaroks-spell-codex-sidebar-button:hover {
+  background: rgba(255, 210, 120, 0.16) !important;
+  border-color: #ffd97a !important;
+  color: #ffe49f !important;
+}
+
+#ragnaroks-spell-codex-sidebar-button.active {
+  background: rgba(255, 210, 120, 0.22) !important;
+  border-color: #ffe49f !important;
+  color: #ffeab9 !important;
+  box-shadow:0 0 12px rgba(255, 210, 120, 0.35) !important;
+}

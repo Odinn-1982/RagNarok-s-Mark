@@ -35,7 +35,7 @@ class SpellEffectsPlugin {
 
   async initialize() {
     // Wait for Ragnar's Mark to be ready
-    Hooks.once('ragnarsMarkReady', () => {
+  Hooks.once('ragnaroksMarkReady', () => {
       this.register();
     });
 
@@ -53,7 +53,7 @@ class SpellEffectsPlugin {
   }
 
   register() {
-    RagnarsMarkAPI.registerPlugin({
+  RagnaroksMarkAPI.registerPlugin({
       id: this.pluginId,
       name: 'Spell Effects Auto-Apply',
       description: 'Automatically apply conditions based on spell damage types',
@@ -102,7 +102,7 @@ class SpellEffectsPlugin {
     const tokenIds = Array.from(targets).map(t => t.id);
     
     try {
-      await RagnarsMarkAPI.batchApply(
+  await RagnaroksMarkAPI.batchApply(
         tokenIds,
         conditionConfig.conditions,
         conditionConfig.duration
@@ -110,7 +110,7 @@ class SpellEffectsPlugin {
 
       // Create visual feedback
       for (let target of targets) {
-        RagnarsMarkAPI.createParticleEffect(
+  RagnaroksMarkAPI.createParticleEffect(
           target.id,
           this.getParticleType(damageType)
         );
@@ -136,13 +136,13 @@ class SpellEffectsPlugin {
     for (const [damageType, config] of Object.entries(SPELL_DAMAGE_CONDITIONS)) {
       if (effectLabel.includes(damageType)) {
         try {
-          await RagnarsMarkAPI.batchApply(
+          await RagnaroksMarkAPI.batchApply(
             [token.id],
             config.conditions,
             config.duration
           );
 
-          RagnarsMarkAPI.createParticleEffect(
+          RagnaroksMarkAPI.createParticleEffect(
             token.id,
             this.getParticleType(damageType)
           );
@@ -208,7 +208,7 @@ class CombatAutomationPlugin {
   }
 
   async initialize() {
-    Hooks.once('ragnarsMarkReady', () => {
+  Hooks.once('ragnaroksMarkReady', () => {
       this.register();
     });
 
@@ -220,7 +220,7 @@ class CombatAutomationPlugin {
   }
 
   register() {
-    RagnarsMarkAPI.registerPlugin({
+  RagnaroksMarkAPI.registerPlugin({
       id: this.pluginId,
       name: 'Combat Automation',
       description: 'Manage conditions automatically during combat',
@@ -256,7 +256,7 @@ class CombatAutomationPlugin {
   }
 
   async onCombatStart(combat) {
-    if (!RagnarsMarkAPI.getPluginSettings(this.pluginId).autoStartCombat) {
+  if (!RagnaroksMarkAPI.getPluginSettings(this.pluginId).autoStartCombat) {
       return;
     }
 
@@ -273,7 +273,7 @@ class CombatAutomationPlugin {
       
       if (conditions.length > 0) {
         try {
-          await RagnarsMarkAPI.batchApply([tokenId], conditions);
+          await RagnaroksMarkAPI.batchApply([tokenId], conditions);
           this.combatConditions.set(tokenId, conditions);
         } catch (error) {
           console.error('Failed to apply initial conditions:', error);
@@ -291,7 +291,7 @@ class CombatAutomationPlugin {
   async onCombatRound(combat, changes) {
     if (!changes.round) return;
 
-    if (!RagnarsMarkAPI.getPluginSettings(this.pluginId).trackRoundDurations) {
+  if (!RagnaroksMarkAPI.getPluginSettings(this.pluginId).trackRoundDurations) {
       return;
     }
 
@@ -307,7 +307,7 @@ class CombatAutomationPlugin {
           
           if (durations[condition] === 0) {
             try {
-              await RagnarsMarkAPI.removeCondition(tokenId, condition);
+              await RagnaroksMarkAPI.removeCondition(tokenId, condition);
               this.announceConditionExpired(tokenId, condition);
             } catch (error) {
               console.error('Failed to remove condition:', error);
@@ -328,13 +328,13 @@ class CombatAutomationPlugin {
 
     if (defeated) {
       try {
-        await RagnarsMarkAPI.addCondition(tokenId, 'defeated');
+  await RagnaroksMarkAPI.addCondition(tokenId, 'defeated');
       } catch (error) {
         console.error('Failed to add defeated condition:', error);
       }
     } else {
       try {
-        await RagnarsMarkAPI.removeCondition(tokenId, 'defeated');
+  await RagnaroksMarkAPI.removeCondition(tokenId, 'defeated');
       } catch (error) {
         console.error('Failed to remove defeated condition:', error);
       }
@@ -368,7 +368,7 @@ class CombatAutomationPlugin {
 
     const message = `${token.name}'s ${condition} condition has expired.`;
     
-    if (RagnarsMarkAPI.getPluginSettings(this.pluginId).announceChanges) {
+  if (RagnaroksMarkAPI.getPluginSettings(this.pluginId).announceChanges) {
       ChatMessage.create({
         content: `<p><em>${message}</em></p>`,
         type: 'emote'
@@ -404,13 +404,13 @@ class AnalyticsReporterPlugin {
   }
 
   async initialize() {
-    Hooks.once('ragnarsMarkReady', () => {
+  Hooks.once('ragnaroksMarkReady', () => {
       this.register();
     });
   }
 
   register() {
-    RagnarsMarkAPI.registerPlugin({
+  RagnaroksMarkAPI.registerPlugin({
       id: this.pluginId,
       name: 'Analytics Reporter',
       description: 'Generate detailed condition statistics and reports',
@@ -450,7 +450,7 @@ class AnalyticsReporterPlugin {
   }
 
   generateReport(type = 'weekly') {
-    const stats = RagnarsMarkAPI.getAllStats();
+  const stats = RagnaroksMarkAPI.getAllStats();
     
     const report = {
       type,
@@ -490,7 +490,7 @@ class AnalyticsReporterPlugin {
     for (let token of tokens) {
       if (!token.actor) continue;
 
-      const conditions = RagnarsMarkAPI.getConditions(token.id);
+  const conditions = RagnaroksMarkAPI.getConditions(token.id);
       stats[token.name] = {
         actorName: token.actor.name,
         conditionCount: conditions.length,
@@ -690,13 +690,13 @@ class CustomThemesPlugin {
   }
 
   async initialize() {
-    Hooks.once('ragnarsMarkReady', () => {
+  Hooks.once('ragnaroksMarkReady', () => {
       this.register();
     });
   }
 
   register() {
-    RagnarsMarkAPI.registerPlugin({
+  RagnaroksMarkAPI.registerPlugin({
       id: this.pluginId,
       name: 'Custom Themes Creator',
       description: 'Create and manage custom visual themes',
@@ -729,7 +729,7 @@ class CustomThemesPlugin {
     }
 
     // Store current theme in settings
-    game.settings.set('ragnars-mark', 'customTheme', themeName);
+  game.settings.set('ragnaroks-mark', 'customTheme', themeName);
 
     // Apply theme CSS
     this.applyThemeStyles(theme);
@@ -739,14 +739,14 @@ class CustomThemesPlugin {
 
   applyThemeStyles(theme) {
     // Remove existing theme style
-    const existingStyle = document.getElementById('ragnars-mark-theme');
+  const existingStyle = document.getElementById('ragnaroks-mark-theme');
     if (existingStyle) existingStyle.remove();
 
     // Create new theme style
     const style = document.createElement('style');
-    style.id = 'ragnars-mark-theme';
+  style.id = 'ragnaroks-mark-theme';
     style.innerHTML = `
-      .ragnars-mark-overlay {
+  .ragnaroks-mark-overlay {
         filter: drop-shadow(0 0 ${theme.glow.strength * 10}px 
           rgba(${theme.glow.r}, ${theme.glow.g}, ${theme.glow.b}, 0.6));
       }
@@ -756,11 +756,11 @@ class CustomThemesPlugin {
   }
 
   saveCustomThemes() {
-    game.settings.set('ragnars-mark', 'pluginData_custom-themes', this.themes);
+  game.settings.set('ragnaroks-mark', 'pluginData_custom-themes', this.themes);
   }
 
   loadCustomThemes() {
-    const saved = game.settings.get('ragnars-mark', 'pluginData_custom-themes');
+  const saved = game.settings.get('ragnaroks-mark', 'pluginData_custom-themes');
     if (saved) {
       this.themes = { ...this.themes, ...saved };
     }
@@ -822,7 +822,7 @@ class AbilityTriggersPlugin {
   }
 
   async initialize() {
-    Hooks.once('ragnarsMarkReady', () => {
+  Hooks.once('ragnaroksMarkReady', () => {
       this.register();
     });
 
@@ -838,7 +838,7 @@ class AbilityTriggersPlugin {
   }
 
   register() {
-    RagnarsMarkAPI.registerPlugin({
+  RagnaroksMarkAPI.registerPlugin({
       id: this.pluginId,
       name: 'Ability Trigger Effects',
       description: 'Auto-apply conditions based on ability usage',
@@ -862,7 +862,7 @@ class AbilityTriggersPlugin {
   }
 
   async onActionUsed(item, config, options) {
-    if (!RagnarsMarkAPI.getPluginSettings(this.pluginId).autoApplyAbilityEffects) {
+  if (!RagnaroksMarkAPI.getPluginSettings(this.pluginId).autoApplyAbilityEffects) {
       return;
     }
 
@@ -879,7 +879,7 @@ class AbilityTriggersPlugin {
     const tokenIds = Array.from(targets).map(t => t.id);
 
     try {
-      await RagnarsMarkAPI.batchApply(
+  await RagnaroksMarkAPI.batchApply(
         tokenIds,
         conditionConfig.conditions,
         conditionConfig.duration
@@ -902,7 +902,7 @@ class AbilityTriggersPlugin {
     // Apply to actor's tokens
     for (let token of actor.getActiveTokens()) {
       try {
-        await RagnarsMarkAPI.batchApply(
+  await RagnaroksMarkAPI.batchApply(
           [token.id],
           conditionConfig.conditions,
           conditionConfig.duration
@@ -956,7 +956,7 @@ Hooks.once('init', () => {
      },
      "dependencies": [
        {
-         "id": "ragnars-mark",
+         "id": "ragnaroks-mark",
          "type": "module"
        }
      ],
@@ -1044,9 +1044,9 @@ Each plugin can be extended by:
 
 3. **Using the full API:**
    ```javascript
-   RagnarsMarkAPI.addCondition(...);
-   RagnarsMarkAPI.batchApply(...);
-   RagnarsMarkAPI.generateCombatReport(...);
+  RagnaroksMarkAPI.addCondition(...);
+  RagnaroksMarkAPI.batchApply(...);
+  RagnaroksMarkAPI.generateCombatReport(...);
    ```
 
 ---

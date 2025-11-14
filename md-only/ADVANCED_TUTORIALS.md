@@ -74,14 +74,14 @@ async function createSpellChain(tokenId, chainConfig) {
   for (const condition of chainConfig.conditions) {
     // Schedule condition application
     setTimeout(async () => {
-      await RagnarsMarkAPI.addCondition(tokenId, condition.name, {
+  await RagnaroksMarkAPI.addCondition(tokenId, condition.name, {
         duration: condition.duration,
         intensity: condition.intensity
       });
       
       // Create visual effect
       if (condition.effects) {
-        await RagnarsMarkAPI.createParticleEffect(
+  await RagnaroksMarkAPI.createParticleEffect(
           tokenId,
           condition.effects
         );
@@ -125,7 +125,7 @@ async function createConditionalChain(tokenId, branchConfig) {
     if (!continueChain) break;
     
     // Apply condition
-    const applied = await RagnarsMarkAPI.addCondition(
+  const applied = await RagnaroksMarkAPI.addCondition(
       tokenId,
       stage.condition,
       { duration: stage.duration }
@@ -133,7 +133,7 @@ async function createConditionalChain(tokenId, branchConfig) {
     
     // Check continuation condition
     if (stage.checkCondition) {
-      const hasCondition = await RagnarsMarkAPI.hasCondition(
+  const hasCondition = await RagnaroksMarkAPI.hasCondition(
         tokenId,
         stage.checkCondition
       );
@@ -215,7 +215,7 @@ async function createCustomEffect(tokenId, config) {
   };
 
   // Apply effect
-  await RagnarsMarkAPI.createParticleEffect(tokenId, effect.type, {
+  await RagnaroksMarkAPI.createParticleEffect(tokenId, effect.type, {
     duration: effect.duration,
     scale: effect.scale,
     intensity: effect.intensity
@@ -268,7 +268,7 @@ await playEffectSequence('token123', spellCastingSequence);
 // Profile condition application time
 const startTime = performance.now();
 
-await RagnarsMarkAPI.batchApply(
+await RagnaroksMarkAPI.batchApply(
   tokenIds,
   ['stunned', 'weakened', 'slowed'],
   6000
@@ -306,13 +306,13 @@ console.log(`Memory: ${stats.used}/${stats.limit} (${stats.percentage})`);
 ```javascript
 // ❌ BAD: Multiple sequential calls
 for (let i = 0; i < 100; i++) {
-  await RagnarsMarkAPI.addCondition(`token${i}`, 'stunned');
+  await RagnaroksMarkAPI.addCondition(`token${i}`, 'stunned');
 }
 // Time: ~5 seconds
 
 // ✅ GOOD: Single batch operation
 const tokenIds = Array.from({ length: 100 }, (_, i) => `token${i}`);
-await RagnarsMarkAPI.batchApply(tokenIds, 'stunned');
+await RagnaroksMarkAPI.batchApply(tokenIds, 'stunned');
 // Time: ~0.5 seconds (10x faster!)
 ```
 
@@ -325,10 +325,10 @@ async function applyConditionVisually(tokenId, condition) {
   
   // Only apply effect if token is visible on screen
   if (token && token.isVisible) {
-    await RagnarsMarkAPI.createParticleEffect(tokenId, condition);
+  await RagnaroksMarkAPI.createParticleEffect(tokenId, condition);
   } else {
     // Just apply condition without visual
-    await RagnarsMarkAPI.addCondition(tokenId, condition);
+  await RagnaroksMarkAPI.addCondition(tokenId, condition);
   }
 }
 ```
@@ -343,7 +343,7 @@ async function debouncedAddCondition(tokenId, condition) {
   clearTimeout(debounceTimer);
   
   debounceTimer = setTimeout(async () => {
-    await RagnarsMarkAPI.addCondition(tokenId, condition);
+  await RagnaroksMarkAPI.addCondition(tokenId, condition);
   }, 100); // Wait 100ms for no new calls
 }
 
@@ -371,7 +371,7 @@ class ConditionCache {
     }
 
     // Fetch fresh data
-    const conditions = await RagnarsMarkAPI.getConditions(tokenId);
+  const conditions = await RagnaroksMarkAPI.getConditions(tokenId);
     
     // Store in cache
     this.cache.set(tokenId, {
@@ -442,7 +442,7 @@ const customTheme = {
   
   // CSS customization
   css: `
-    .ragnars-mark-condition {
+  .ragnaroks-mark-condition {
       border-radius: 8px;
       font-weight: bold;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
@@ -476,7 +476,7 @@ async function applyTheme(themeId) {
       --ragnar-text: ${theme.colors.text};
     }
     
-    .ragnars-mark-overlay {
+  .ragnaroks-mark-overlay {
       filter: drop-shadow(0 0 ${theme.effects.glowIntensity * 10}px 
         rgba(${hexToRgb(theme.colors.primary)}, 0.6));
     }
@@ -485,7 +485,7 @@ async function applyTheme(themeId) {
   // Add condition-specific styles
   for (const [condition, style] of Object.entries(theme.conditions)) {
     css += `
-      .ragnars-mark-condition.${condition} {
+  .ragnaroks-mark-condition.${condition} {
         background-color: ${style.color};
       }
     `;
@@ -499,7 +499,7 @@ async function applyTheme(themeId) {
   styleEl.innerHTML = css;
 
   // Save theme preference
-  await RagnarsMarkAPI.setGameSetting('activeTheme', themeId);
+  await RagnaroksMarkAPI.setGameSetting('activeTheme', themeId);
 }
 
 function hexToRgb(hex) {
@@ -560,7 +560,7 @@ engine.registerRule({
   condition: async (data) => data.ability.name === 'healing-word',
   action: async (data) => {
     const targets = game.user.targets;
-    await RagnarsMarkAPI.batchRemove(
+  await RagnaroksMarkAPI.batchRemove(
       Array.from(targets).map(t => t.id),
       ['weakened', 'poisoned']
     );
@@ -572,7 +572,7 @@ engine.registerRule({
   trigger: 'savingThrowFailed',
   condition: async (data) => data.spell.school === 'necromancy',
   action: async (data) => {
-    await RagnarsMarkAPI.addCondition(data.targetId, 'cursed', {
+  await RagnaroksMarkAPI.addCondition(data.targetId, 'cursed', {
       duration: 300000,
       intensity: 5
     });
@@ -585,16 +585,16 @@ engine.registerRule({
 ```javascript
 class SmartConditionManager {
   async autoRemoveExpiredConditions() {
-    const tokens = RagnarsMarkAPI.getTokenList();
+  const tokens = RagnaroksMarkAPI.getTokenList();
     
     for (const token of tokens) {
-      const conditions = RagnarsMarkAPI.getConditions(token.id);
+  const conditions = RagnaroksMarkAPI.getConditions(token.id);
       
       for (const condition of conditions) {
-        const data = RagnarsMarkAPI.getConditionData(token.id, condition);
+  const data = RagnaroksMarkAPI.getConditionData(token.id, condition);
         
         if (data && data.remainingDuration <= 0) {
-          await RagnarsMarkAPI.removeCondition(token.id, condition);
+          await RagnaroksMarkAPI.removeCondition(token.id, condition);
         }
       }
     }
@@ -603,15 +603,15 @@ class SmartConditionManager {
   async autoApplyRecoveryConditions() {
     // After combat, remove combat-specific conditions
     const combatConditions = ['readied', 'defending', 'engaged'];
-    const tokens = RagnarsMarkAPI.getTokenList();
+  const tokens = RagnaroksMarkAPI.getTokenList();
     
-    await RagnarsMarkAPI.batchRemove(
+  await RagnaroksMarkAPI.batchRemove(
       tokens.map(t => t.id),
       combatConditions
     );
     
     // Apply recovery condition
-    await RagnarsMarkAPI.batchApply(
+  await RagnaroksMarkAPI.batchApply(
       tokens.map(t => t.id),
       'recovered',
       30000
@@ -619,19 +619,19 @@ class SmartConditionManager {
   }
 
   async syncWithTokenState() {
-    const tokens = RagnarsMarkAPI.getTokenList();
+  const tokens = RagnaroksMarkAPI.getTokenList();
     
     for (const token of tokens) {
       const actor = token.actor;
       
       // Remove unconscious if HP > 0
       if (actor.system.hp.value > 0) {
-        await RagnarsMarkAPI.removeCondition(token.id, 'unconscious');
+  await RagnaroksMarkAPI.removeCondition(token.id, 'unconscious');
       }
       
       // Add unconscious if HP <= 0
       if (actor.system.hp.value <= 0) {
-        await RagnarsMarkAPI.addCondition(token.id, 'unconscious');
+  await RagnaroksMarkAPI.addCondition(token.id, 'unconscious');
       }
     }
   }
@@ -722,7 +722,7 @@ class ModuleIntegration {
     Hooks.on('combatEnhancer.turnStart', async (combatant) => {
       // Apply turn-based conditions
       if (combatant.defeated) {
-        await RagnarsMarkAPI.addCondition(combatant.tokenId, 'defeated');
+  await RagnaroksMarkAPI.addCondition(combatant.tokenId, 'defeated');
       }
     });
   }
@@ -730,7 +730,7 @@ class ModuleIntegration {
   async integrateWithTokenMagic() {
     // Token Magic FX provides visual effects
     const applyConditionWithMagic = async (tokenId, condition) => {
-      await RagnarsMarkAPI.addCondition(tokenId, condition);
+  await RagnaroksMarkAPI.addCondition(tokenId, condition);
       
       // Apply matching Token Magic effect
       const magicEffect = {
@@ -807,7 +807,7 @@ class CampaignOrganizer {
 
   async applyEncounter(tokenIds, encounterPack) {
     for (const condition of encounterPack.conditions) {
-      await RagnarsMarkAPI.batchApply(tokenIds, condition.name);
+  await RagnaroksMarkAPI.batchApply(tokenIds, condition.name);
     }
   }
 }

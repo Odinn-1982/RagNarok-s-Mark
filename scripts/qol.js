@@ -130,8 +130,8 @@ export const QUALITY_OF_LIFE = {
 
     // Add condition to all selected tokens
     for (const token of selectedTokens) {
-      if (window.RagnarsMarkAPI) {
-        window.RagnarsMarkAPI.addCondition(token.id, condition);
+      if (window.RagnaroksMarkAPI) {
+        window.RagnaroksMarkAPI.addCondition(token.id, condition);
       }
     }
 
